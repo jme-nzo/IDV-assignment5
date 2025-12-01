@@ -1,452 +1,2185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Assignment Portfolio</title>
-	<style>
-		:root {
-			--sidebar-width: 280px;
-			--bg: #f4f5f7;
-			--card-bg: #ffffff;
-			--border: #e0e3e8;
-			--text: #1f2a37;
-			--muted: #5f6b7c;
-			--accent: #2b6cb0;
-		}
-
-		* {
-			box-sizing: border-box;
-		}
-
-		body {
-			margin: 0;
-			font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-			background: var(--bg);
-			color: var(--text);
-			line-height: 1.5;
-			overflow-x: hidden;
-		}
-
-		a {
-			color: inherit;
-		}
-
-		.layout {
-			display: flex;
-			min-height: 100vh;
-			width: 100%;
-		}
-
-		.sidebar {
-			width: var(--sidebar-width);
-			padding: 2rem 1.5rem;
-			background: #0f172a;
-			color: #f8fafc;
-			position: sticky;
-			top: 0;
-			height: 100vh;
-			display: flex;
-			flex-direction: column;
-			gap: 2rem;
-		}
-
-		.sidebar h1 {
-			font-size: 1.4rem;
-			margin: 0;
-			letter-spacing: 0.04em;
-			text-transform: uppercase;
-		}
-
-		.sidebar nav {
-			display: flex;
-			flex-direction: column;
-			gap: 0.5rem;
-		}
-
-		.sidebar a {
-			text-decoration: none;
-			color: #e2e8f0;
-			padding: 0.5rem 0.75rem;
-			border-radius: 0.5rem;
-			transition: background 0.2s ease;
-			font-weight: 600;
-		}
-
-		.sidebar a:hover,
-		.sidebar a:focus-visible {
-			background: rgba(255, 255, 255, 0.12);
-			outline: none;
-		}
-
-		.content {
-			flex: 1;
-			padding: 2.5rem 3rem;
-			min-width: 0;
-		}
-
-		.page-header {
-			margin-bottom: 2rem;
-			max-width: 780px;
-		}
-
-		.page-header h2 {
-			margin: 0 0 0.5rem;
-			font-size: 2rem;
-		}
-
-		.page-header p {
-			margin: 0;
-			color: var(--muted);
-			font-size: 1rem;
-		}
-
-		.assignment {
-			background: var(--card-bg);
-			border: 1px solid var(--border);
-			border-radius: 1rem;
-			padding: 1.75rem;
-			margin-bottom: 2rem;
-			box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
-		}
-
-		.assignment h3 {
-			margin: 0 0 0.15rem;
-			font-size: 1.4rem;
-		}
-
-		.assignment small {
-			display: block;
-			color: var(--muted);
-			margin-bottom: 1rem;
-		}
-
-		.frame-wrapper {
-			width: 100%;
-			background: #0f172a;
-			border-radius: 0.75rem;
-			border: 1px solid #0f172a;
-			overflow: hidden;
-			position: relative;
-		}
-
-		.frame-wrapper iframe {
-			width: 100%;
-			border: 0;
-			display: block;
-			min-height: 700px;
-			background: #ffffff;
-		}
-
-		.assignment-footer {
-			display: flex;
-			justify-content: space-between;
-			flex-wrap: wrap;
-			gap: 0.5rem;
-			margin-top: 1rem;
-			font-size: 0.95rem;
-			color: var(--muted);
-		}
-
-		@media (max-width: 1100px) {
-			.layout {
-				flex-direction: column;
-			}
-
-			.sidebar {
-				position: static;
-				width: 100%;
-				height: auto;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-			}
-
-			.content {
-				padding: 2rem 1.25rem 3rem;
-			}
-		}
-
-		@media (max-width: 600px) {
-			.sidebar nav {
-				flex-direction: row;
-				flex-wrap: wrap;
-				gap: 0.25rem;
-			}
-
-			.sidebar a {
-				flex: 1 1 45%;
-				text-align: center;
-			}
-
-			.assignment {
-				padding: 1.25rem;
-			}
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Portfolio</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: #f4f4f9;
+        }
+        /* Sidebar */
+        #sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #2c3e50;
+            color: white;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            z-index: 1000; /* Ensure sidebar stays on top */
+        }
+        #sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+        #sidebar a {
+            text-decoration: none;
+            color: #ecf0f1;
+            padding: 15px 25px;
+            transition: background 0.3s;
+            font-size: 1.1rem;
+        }
+        #sidebar a:hover {
+            background-color: #34495e;
+        }
+        #sidebar a.active {
+            background-color: #1abc9c;
+        }
+        /* Main Content */
+        #content {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+        }
+        .assignment-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .assignment-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        /* Specific height for Assignment 2 to avoid internal scrolling */
+        #frame2 {
+            height: 3200px;
+        }
+        /* Specific height for Assignment 3 to avoid internal scrolling */
+        #frame3 {
+            height: 4200px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-	<div class="layout">
-		<aside class="sidebar">
-			<div>
-				<h1>Assignments</h1>
-				<p style="margin:0;color:#94a3b8;">Unified showcase with quick navigation.</p>
-			</div>
-			<nav aria-label="Assignment navigation">
-				<a href="#assignment-1">Code 1 · PSI Dashboard</a>
-				<a href="#assignment-2">Code 2 · SVG Matrix</a>
-				<a href="#assignment-3">Code 3 · D3 Stack</a>
-				<a href="#assignment-4">Code 4 · Heatmap Pitch</a>
-			</nav>
-		</aside>
-		<main class="content">
-			<header class="page-header">
-				<h2>Visual Computing Compilation</h2>
-				<p>Each section embeds the exact source from previous assignments while keeping a cohesive layout, headings, spacing, and navigation. Use the links on the left to jump between projects.</p>
-			</header>
 
-			<section id="assignment-1" class="assignment" data-template="assignment-1-template">
-				<h3>Code 1 · Singapore PSI Data</h3>
-				<small>Original real-time PSI dashboard preserved inside this frame.</small>
-				<div class="frame-wrapper">
-					<iframe title="Code 1 iframe" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
-				</div>
-				<div class="assignment-footer">
-					<span>Includes live API polling every 5 minutes.</span>
-					<a href="#assignment-4">Jump to final code →</a>
-				</div>
-			</section>
+    <div id="sidebar">
+        <h2>Portfolio</h2>
+        <a href="#" onclick="showAssignment(1, this)" class="active">Assignment 1: PSI</a>
+        <a href="#" onclick="showAssignment(2, this)">Assignment 2: SVG</a>
+        <a href="#" onclick="showAssignment(3, this)">Assignment 3: D3 Stack</a>
+        <a href="#" onclick="showAssignment(4, this)">Assignment 4: Heatmap</a>
+    </div>
 
-			<section id="assignment-2" class="assignment" data-template="assignment-2-template">
-				<h3>Code 2 · SVG Transformation Table</h3>
-				<small>Interactive SVG variants rendered in a responsive table layout.</small>
-				<div class="frame-wrapper">
-					<iframe title="Code 2 iframe" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
-				</div>
-				<div class="assignment-footer">
-					<span>Mirrored, rotated, squeezed, and grayscale clones generated per row.</span>
-					<a href="#assignment-3">Next section ↓</a>
-				</div>
-			</section>
+    <div id="content">
+        <div id="assign1" class="assignment-section active">
+            <h1>Assignment 1: Singapore PSI Data</h1>
+            <iframe id="frame1" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
+        </div>
+        <div id="assign2" class="assignment-section">
+            <h1>Assignment 2: SVG Transformations</h1>
+            <iframe id="frame2" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
+        </div>
+        <div id="assign3" class="assignment-section">
+            <h1>Assignment 3: D3 Stack Visualization</h1>
+            <iframe id="frame3" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
+        </div>
+        <div id="assign4" class="assignment-section">
+            <h1>Assignment 4: Football Heatmap</h1>
+            <iframe id="frame4" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
+        </div>
+    </div>
 
-			<section id="assignment-3" class="assignment" data-template="assignment-3-template">
-				<h3>Code 3 · D3 Experiments Stack</h3>
-				<small>Scroll-based collection of interactive D3 templates embedded intact.</small>
-				<div class="frame-wrapper">
-					<iframe title="Code 3 iframe" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-				</div>
-				<div class="assignment-footer">
-					<span>Contains quadrilateral drag demo, morphing SVG, interactive Venn, grid path, and model chart.</span>
-					<a href="#assignment-1">Back to top ↑</a>
-				</div>
-			</section>
+    <!-- TEMPLATES -->
 
-			<section id="assignment-4" class="assignment" data-template="assignment-4-template">
-				<h3>Code 4 · Landscape Football Heatmap</h3>
-				<small>Dynamic tactical heatmap with dataset selector and tooltip overlays.</small>
-				<div class="frame-wrapper">
-					<iframe title="Code 4 iframe" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
-				</div>
-				<div class="assignment-footer">
-					<span>Neon gradient heatmap transitions based on strategy selection.</span>
-					<a href="#assignment-2">Review Code 2</a>
-				</div>
-			</section>
-		</main>
-	</div>
+    <!-- Assignment 1: PSI -->
+    <template id="code1">
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body { font-family: sans-serif; padding: 20px; }
+                table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+                th { background-color: #f2f2f2; }
+                #timestamp { font-weight: bold; color: #555; }
+            </style>
+        </head>
+        <body>
+            <h2>Singapore PSI Readings</h2>
+            <p>Last Updated: <span id="timestamp">Loading...</span></p>
+            <table id="psiTable">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>National</th>
+                        <th>Central</th>
+                        <th>West</th>
+                        <th>East</th>
+                        <th>North</th>
+                        <th>South</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <script>
+                fetch('https://api.data.gov.sg/v1/environment/psi')
+                    .then(response => response.json())
+                    .then(data => {
+                        const readings = data.items[0].readings;
+                        const timestamp = data.items[0].update_timestamp;
+                        document.getElementById('timestamp').innerText = new Date(timestamp).toLocaleString();
+                        
+                        const tableBody = document.querySelector('#psiTable tbody');
+                        const metrics = Object.keys(readings);
+                        
+                        metrics.forEach(metric => {
+                            const row = document.createElement('tr');
+                            const regions = ['national', 'central', 'west', 'east', 'north', 'south'];
+                            
+                            let rowHtml = `<td>${metric}</td>`;
+                            regions.forEach(region => {
+                                rowHtml += `<td>${readings[metric][region]}</td>`;
+                            });
+                            row.innerHTML = rowHtml;
+                            tableBody.appendChild(row);
+                        });
+                    })
+                    .catch(err => console.error(err));
+            </script>
+        </body>
+        </html>
+    </template>
 
-	<!-- Templates preserve each original document exactly as provided -->
-	<template id="assignment-1-template"><!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Singapore PSI Data (Live)</title>
-	<link href="style.css" rel="stylesheet">
-  
-</head>
-<body>
-	<h1>Singapore Real-time PSI Data</h1>
-	<p id="dataTimestamp">Loading data timestamp...</p>
-	<p id="updatedTime">Loading update time...</p>
-
-	<table id="psiTable">
-		<thead>
-			<tr>
-				<th id="headline">Reading Type</th>
-				<th id="headline">North</th>
-				<th id="headline">South</th>
-				<th id="headline">East</th>
-				<th id="headline">West</th>
-				<th id="headline">Central</th>
-				<th id="headline">National</th>
-			</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
-
-	<script>
-	async function loadPSIData() {
-		try {
-			const response = await fetch('https://api.data.gov.sg/v1/environment/psi', { cache: "no-store" });
-			const data = await response.json();
-
-			const readings = data.items[0].readings;
-			const timestamp = data.items[0].timestamp;
-			const updateTime = data.items[0].update_timestamp;
-
-			const tbody = document.querySelector("#psiTable tbody");
-			const updatedTime = document.getElementById("updatedTime");
-			const dataTimestamp = document.getElementById("dataTimestamp");
-
-			tbody.innerHTML = "";
-
-			for (const [key, value] of Object.entries(readings)) {
-				const row = document.createElement("tr");
-				row.innerHTML = `
-					<td>${key}</td>
-					<td>${value.north}</td>
-					<td>${value.south}</td>
-					<td>${value.east}</td>
-					<td>${value.west}</td>
-					<td>${value.central}</td>
-					<td>${value.national}</td>
-				`;
-				tbody.appendChild(row);
-			}
-
-			const dataTime = new Date(timestamp).toLocaleString("en-SG", { timeZone: "Asia/Singapore" });
-			const updateDisplayTime = new Date(updateTime).toLocaleString("en-SG", { timeZone: "Asia/Singapore" });
-
-			dataTimestamp.textContent = ` Data recorded at: ${dataTime}`;
-			updatedTime.textContent = ` Data last updated at: ${updateDisplayTime}`;
-
-		} catch (error) {
-			console.error("Error fetching PSI data:", error);
-			document.getElementById("updatedTime").textContent = "Error fetching data.";
-		}
-	}
-
-	loadPSIData();
-
-	setInterval(loadPSIData, 5 * 60 * 1000);
-</script>
-</body>
-</html></template>
-
-	<template id="assignment-2-template"><!DOCTYPE html>
+    <!-- Assignment 2: SVG -->
+    <template id="code2">
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SVG Assignment 2 by Jaime Jover :)</title>
 <style>
-	:root { --bg:#f0f0f0; --fg:#e8eaed; --muted:#9aa0a6; --grid:#202225; }
-	html,body { background:var(--bg); color:var(--fg); margin:0; font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
-	main { padding:20px; }
-	h1 { margin:0 0 8px; font-size:20px; color:#202225;}
-	p.note { margin:6px 0 16px; color:var(--muted); font-size:14px; }
-	table { width:100%; border-collapse:collapse; table-layout:fixed; border:1px solid var(--grid); }
-	thead th { position:sticky; top:0; background:#101217; color:var(--fg); font-weight:600; font-size:14px; padding:10px 6px; border-bottom:1px solid var(--grid); }
-	td,th { border-right:1px solid var(--grid); border-bottom:1px solid var(--grid); vertical-align:middle; text-align:center; }
-	th:last-child, td:last-child { border-right:none; }
-	tr:last-child td { border-bottom:none; }
-	.cell { padding:10px; }
-	.frame {
-		background:#f0f0f0; border-radius:12px; overflow:hidden;
-		width:100%; aspect-ratio:4/3; display:grid; place-items:center;
-	}
-	.frame svg { width:50%; height:auto; }
-	.hint { color:#778; font-size:12px; margin-top:6px; }
-	.label { color:#202225; font-size:12px; margin-top:4px; }
-	code { background:#13161c; padding:2px 4px; border-radius:6px; }
+  :root { --bg:#f0f0f0; --fg:#e8eaed; --muted:#9aa0a6; --grid:#202225; }
+  html,body { background:var(--bg); color:var(--fg); margin:0; font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+  main { padding:20px; }
+  h1 { margin:0 0 8px; font-size:20px; color:#202225;}
+  p.note { margin:6px 0 16px; color:var(--muted); font-size:14px; }
+  table { width:100%; border-collapse:collapse; table-layout:fixed; border:1px solid var(--grid); }
+  thead th { position:sticky; top:0; background:#101217; color:var(--fg); font-weight:600; font-size:14px; padding:10px 6px; border-bottom:1px solid var(--grid); }
+  td,th { border-right:1px solid var(--grid); border-bottom:1px solid var(--grid); vertical-align:middle; text-align:center; }
+  th:last-child, td:last-child { border-right:none; }
+  tr:last-child td { border-bottom:none; }
+  .cell { padding:10px; }
+  .frame {
+    background:#f0f0f0; border-radius:12px; overflow:hidden;
+    width:100%; aspect-ratio:4/3; display:grid; place-items:center;
+  }
+  .frame svg { width:50%; height:auto; }
+  .hint { color:#778; font-size:12px; margin-top:6px; }
+  .label { color:#202225; font-size:12px; margin-top:4px; }
+  code { background:#13161c; padding:2px 4px; border-radius:6px; }
 </style>
 </head>
 <body>
 <main>
-	<h1>Jaime Jover's Assignment 2 Submission</h1>
+  <h1>Jaime Jover's Assignment 2 Submission</h1>
 
-	<table>
-		<thead>
-			<tr>
-				<th>Original </th>
-				<th>Left‑Right Mirrored </th>
-				<th>Rotated 180° </th>
-				<th>Vertically Squeezed 50%</th>
-				<th>Grayscale </th>
-			</tr>
-		</thead>
-		<tbody>
+  <table>
+    <thead>
+      <tr>
+        <th>Original </th>
+        <th>Left‑Right Mirrored </th>
+        <th>Rotated 180° </th>
+        <th>Vertically Squeezed 50%</th>
+        <th>Grayscale </th>
+      </tr>
+    </thead>
+    <tbody>
       
-			<tr data-row="1">
-				<td class="cell">
-					<div class="frame">
-						<svg xmlns="http://www.w3.org/2000/svg" width="749" height="205" fill="none" viewBox="0 0 749 205"><path fill="#5E5E5E" d="M707.39 161.434c-7.234 0-13.775-1.685-19.622-5.055-5.747-3.369-10.256-8.027-13.527-13.973-3.27-6.045-4.905-12.783-4.905-20.216 0-7.135 1.536-13.676 4.608-19.622 3.171-6.045 7.581-10.801 13.23-14.27 5.648-3.567 12.09-5.351 19.324-5.351 7.433 0 13.874 1.635 19.325 4.905 5.549 3.27 9.761 7.83 12.635 13.676 2.874 5.748 4.311 12.387 4.311 19.919 0 .892-.05 1.784-.149 2.676-.099.891-.149 1.387-.149 1.486h-56.784c.496 6.739 2.924 11.942 7.284 15.608 4.361 3.667 9.315 5.5 14.865 5.5 8.523 0 15.063-3.964 19.622-11.892l13.973 6.69c-3.271 6.045-7.829 10.9-13.676 14.567-5.748 3.568-12.536 5.352-20.365 5.352Zm18.73-48.311c-.198-2.379-.991-4.807-2.378-7.284-1.388-2.478-3.568-4.559-6.541-6.243-2.874-1.784-6.491-2.676-10.851-2.676-4.856 0-9.068 1.486-12.636 4.459-3.468 2.973-5.846 6.888-7.135 11.744h39.541ZM633.449 161.434c-8.424 0-15.41-1.933-20.96-5.798-5.45-3.964-9.315-8.919-11.594-14.865l14.567-6.243c1.685 4.063 4.113 7.135 7.284 9.216 3.27 2.081 6.838 3.122 10.703 3.122 4.063 0 7.383-.743 9.959-2.23 2.577-1.585 3.865-3.617 3.865-6.094 0-2.379-1.04-4.311-3.122-5.798-2.081-1.585-5.5-2.973-10.256-4.162l-10.109-2.378c-5.549-1.289-10.355-3.667-14.418-7.135-3.964-3.568-5.946-8.176-5.946-13.825 0-6.838 2.824-12.239 8.473-16.203 5.648-4.063 12.585-6.094 20.81-6.094 6.838 0 12.883 1.437 18.136 4.31 5.351 2.874 9.216 7.037 11.594 12.487l-14.419 6.095c-1.387-3.072-3.518-5.352-6.392-6.838-2.874-1.487-5.995-2.23-9.364-2.23-3.271 0-6.145.743-8.622 2.23-2.478 1.387-3.716 3.27-3.716 5.649 0 2.081.842 3.765 2.527 5.054 1.783 1.288 4.558 2.378 8.324 3.27l11 2.676c7.432 1.882 12.982 4.756 16.649 8.621 3.666 3.766 5.5 8.325 5.5 13.676 0 4.36-1.338 8.324-4.014 11.892-2.576 3.567-6.193 6.392-10.851 8.473-4.559 2.081-9.761 3.122-15.608 3.122ZM555.223 161.434c-5.252 0-10.009-1.041-14.27-3.122-4.162-2.18-7.482-5.153-9.96-8.919-2.378-3.865-3.567-8.225-3.567-13.081 0-7.73 2.874-13.825 8.621-18.284 5.847-4.46 13.23-6.689 22.149-6.689 7.829 0 14.518 1.338 20.068 4.013v-3.121c0-4.46-1.784-8.126-5.352-11-3.468-2.973-7.68-4.46-12.635-4.46-7.531 0-13.576 3.072-18.135 9.216l-12.486-8.621c3.468-4.658 7.779-8.225 12.932-10.703 5.252-2.477 11.149-3.716 17.689-3.716 10.802 0 19.126 2.725 24.973 8.175 5.946 5.352 8.919 12.933 8.919 22.744v45.189h-15.905v-9.067h-.892c-2.378 3.369-5.401 6.144-9.068 8.324-3.666 2.081-8.027 3.122-13.081 3.122Zm2.676-13.528c3.667 0 7.036-.891 10.108-2.675 3.171-1.883 5.649-4.311 7.432-7.284 1.883-3.072 2.825-6.342 2.825-9.811-5.252-2.874-10.852-4.311-16.798-4.311-5.45 0-9.711 1.189-12.783 3.568-3.072 2.378-4.608 5.401-4.608 9.067 0 3.37 1.337 6.145 4.013 8.325 2.775 2.081 6.045 3.121 9.811 3.121ZM486.618 161.433c-5.352 0-10.158-1.139-14.419-3.419-4.162-2.279-7.284-5.153-9.365-8.621h-.892v9.662h-15.46V52.622h16.352v31.96l-.892 10.256h.892c2.081-3.369 5.203-6.193 9.365-8.473 4.261-2.279 9.067-3.418 14.419-3.418 6.342 0 12.189 1.684 17.54 5.054 5.451 3.369 9.762 8.076 12.933 14.121 3.27 5.946 4.905 12.635 4.905 20.068 0 7.432-1.635 14.122-4.905 20.067-3.171 5.946-7.482 10.654-12.933 14.122-5.351 3.37-11.198 5.054-17.54 5.054Zm-2.825-15.013c3.865 0 7.433-.991 10.703-2.973 3.369-1.982 6.045-4.807 8.027-8.473 2.081-3.766 3.122-8.027 3.122-12.784 0-4.757-1.041-8.969-3.122-12.635-1.982-3.766-4.658-6.64-8.027-8.622-3.27-1.982-6.838-2.973-10.703-2.973-3.865 0-7.482.991-10.851 2.973-3.27 1.982-5.946 4.806-8.027 8.473-1.982 3.667-2.973 7.928-2.973 12.784 0 4.856.991 9.117 2.973 12.784 2.081 3.666 4.757 6.491 8.027 8.473 3.369 1.982 6.986 2.973 10.851 2.973ZM401.365 161.434c-7.235 0-13.775-1.685-19.622-5.055-5.748-3.369-10.257-8.027-13.527-13.973-3.27-6.045-4.905-12.783-4.905-20.216 0-7.135 1.536-13.676 4.608-19.622 3.171-6.045 7.581-10.801 13.229-14.27 5.649-3.567 12.091-5.351 19.325-5.351 7.432 0 13.874 1.635 19.324 4.905 5.55 3.27 9.762 7.83 12.635 13.676 2.874 5.748 4.311 12.387 4.311 19.919 0 .892-.049 1.784-.148 2.676-.1.891-.149 1.387-.149 1.486h-56.784c.495 6.739 2.923 11.942 7.284 15.608 4.36 3.667 9.315 5.5 14.865 5.5 8.522 0 15.063-3.964 19.621-11.892l13.973 6.69c-3.27 6.045-7.828 10.9-13.675 14.567-5.748 3.568-12.536 5.352-20.365 5.352Zm18.73-48.311c-.199-2.379-.991-4.807-2.379-7.284-1.387-2.478-3.567-4.559-6.54-6.243-2.874-1.784-6.491-2.676-10.852-2.676-4.856 0-9.067 1.486-12.635 4.459-3.468 2.973-5.847 6.888-7.135 11.744h39.541ZM317.93 85.325h15.459v11h.892c1.586-3.766 4.46-6.887 8.622-9.365 4.162-2.576 8.423-3.864 12.784-3.864 3.567 0 6.491.495 8.77 1.486v17.095c-3.37-1.685-7.135-2.527-11.297-2.527-5.352 0-9.861 2.081-13.528 6.243-3.567 4.063-5.351 9.067-5.351 15.013v38.649H317.93v-73.73ZM294.594 72.838c-3.072 0-5.698-1.04-7.879-3.121-2.081-2.18-3.121-4.806-3.121-7.879 0-3.072 1.04-5.648 3.121-7.73 2.181-2.18 4.807-3.27 7.879-3.27 3.072 0 5.648 1.09 7.73 3.27 2.18 2.082 3.27 4.658 3.27 7.73s-1.09 5.699-3.27 7.879c-2.082 2.08-4.658 3.121-7.73 3.121Zm-8.176 12.487h16.351v73.73h-16.351v-73.73ZM211.938 52.622H276.6v15.906h-48.014v30.621h43.257v15.757h-43.257v44.149h-16.648V52.622Z"/><path fill="#FF9100" d="M51.227 191.109a77.714 77.714 0 0 0 26.359 5.568 77.468 77.468 0 0 0 35.304-7.116 109.954 109.954 0 0 1-34.417-21.609c-6.438 10.308-15.96 18.449-27.245 23.157Z"/><path fill="#FFC400" d="M78.471 167.955c-22.67-20.967-36.423-51.314-35.261-84.6.038-1.08.095-2.16.161-3.24a58.722 58.722 0 0 0-30.66.32 77.424 77.424 0 0 0-10.159 35.793c-1.174 33.624 19.173 63.003 48.674 74.884a58.878 58.878 0 0 0 27.245-23.157Z"/><path fill="#FF9100" d="M78.472 167.954c5.27-8.435 8.467-18.324 8.839-28.978.978-28.026-17.862-52.135-43.939-58.862-.066 1.08-.123 2.16-.161 3.24-1.162 33.286 12.59 63.633 35.261 84.6Z"/><path fill="#DD2C00" d="M84.394 1.335C69.544 13.233 57.816 28.921 50.72 46.994a109.67 109.67 0 0 0-7.36 33.127c26.076 6.727 44.917 30.836 43.939 58.862a58.48 58.48 0 0 1-8.84 28.978 109.787 109.787 0 0 0 34.418 21.609c25.79-11.921 44.088-37.574 45.148-67.916.686-19.659-6.867-37.18-17.54-51.969-11.271-15.64-56.09-68.35-56.09-68.35Z"/></svg>
-					</div>
-					<div class="label">Firebase.js</div>
-				</td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-			</tr>
+      <tr data-row="1">
+        <td class="cell">
+          <div class="frame">
+            <svg xmlns="http://www.w3.org/2000/svg" width="749" height="205" fill="none" viewBox="0 0 749 205"><path fill="#5E5E5E" d="M707.39 161.434c-7.234 0-13.775-1.685-19.622-5.055-5.747-3.369-10.256-8.027-13.527-13.973-3.27-6.045-4.905-12.783-4.905-20.216 0-7.135 1.536-13.676 4.608-19.622 3.171-6.045 7.581-10.801 13.23-14.27 5.648-3.567 12.09-5.351 19.324-5.351 7.433 0 13.874 1.635 19.325 4.905 5.549 3.27 9.761 7.83 12.635 13.676 2.874 5.748 4.311 12.387 4.311 19.919 0 .892-.05 1.784-.149 2.676-.099.891-.149 1.387-.149 1.486h-56.784c.496 6.739 2.924 11.942 7.284 15.608 4.361 3.667 9.315 5.5 14.865 5.5 8.523 0 15.063-3.964 19.622-11.892l13.973 6.69c-3.271 6.045-7.829 10.9-13.676 14.567-5.748 3.568-12.536 5.352-20.365 5.352Zm18.73-48.311c-.198-2.379-.991-4.807-2.378-7.284-1.388-2.478-3.568-4.559-6.541-6.243-2.874-1.784-6.491-2.676-10.851-2.676-4.856 0-9.068 1.486-12.636 4.459-3.468 2.973-5.846 6.888-7.135 11.744h39.541ZM633.449 161.434c-8.424 0-15.41-1.933-20.96-5.798-5.45-3.964-9.315-8.919-11.594-14.865l14.567-6.243c1.685 4.063 4.113 7.135 7.284 9.216 3.27 2.081 6.838 3.122 10.703 3.122 4.063 0 7.383-.743 9.959-2.23 2.577-1.585 3.865-3.617 3.865-6.094 0-2.379-1.04-4.311-3.122-5.798-2.081-1.585-5.5-2.973-10.256-4.162l-10.109-2.378c-5.549-1.289-10.355-3.667-14.418-7.135-3.964-3.568-5.946-8.176-5.946-13.825 0-6.838 2.824-12.239 8.473-16.203 5.648-4.063 12.585-6.094 20.81-6.094 6.838 0 12.883 1.437 18.136 4.31 5.351 2.874 9.216 7.037 11.594 12.487l-14.419 6.095c-1.387-3.072-3.518-5.352-6.392-6.838-2.874-1.487-5.995-2.23-9.364-2.23-3.271 0-6.145.743-8.622 2.23-2.478 1.387-3.716 3.27-3.716 5.649 0 2.081.842 3.765 2.527 5.054 1.783 1.288 4.558 2.378 8.324 3.27l11 2.676c7.432 1.882 12.982 4.756 16.649 8.621 3.666 3.766 5.5 8.325 5.5 13.676 0 4.36-1.338 8.324-4.014 11.892-2.576 3.567-6.193 6.392-10.851 8.473-4.559 2.081-9.761 3.122-15.608 3.122ZM555.223 161.434c-5.252 0-10.009-1.041-14.27-3.122-4.162-2.18-7.482-5.153-9.96-8.919-2.378-3.865-3.567-8.225-3.567-13.081 0-7.73 2.874-13.825 8.621-18.284 5.847-4.46 13.23-6.689 22.149-6.689 7.829 0 14.518 1.338 20.068 4.013v-3.121c0-4.46-1.784-8.126-5.352-11-3.468-2.973-7.68-4.46-12.635-4.46-7.531 0-13.576 3.072-18.135 9.216l-12.486-8.621c3.468-4.658 7.779-8.225 12.932-10.703 5.252-2.477 11.149-3.716 17.689-3.716 10.802 0 19.126 2.725 24.973 8.175 5.946 5.352 8.919 12.933 8.919 22.744v45.189h-15.905v-9.067h-.892c-2.378 3.369-5.401 6.144-9.068 8.324-3.666 2.081-8.027 3.122-13.081 3.122Zm2.676-13.528c3.667 0 7.036-.891 10.108-2.675 3.171-1.883 5.649-4.311 7.432-7.284 1.883-3.072 2.825-6.342 2.825-9.811-5.252-2.874-10.852-4.311-16.798-4.311-5.45 0-9.711 1.189-12.783 3.568-3.072 2.378-4.608 5.401-4.608 9.067 0 3.37 1.337 6.145 4.013 8.325 2.775 2.081 6.045 3.121 9.811 3.121ZM486.618 161.433c-5.352 0-10.158-1.139-14.419-3.419-4.162-2.279-7.284-5.153-9.365-8.621h-.892v9.662h-15.46V52.622h16.352v31.96l-.892 10.256h.892c2.081-3.369 5.203-6.193 9.365-8.473 4.261-2.279 9.067-3.418 14.419-3.418 6.342 0 12.189 1.684 17.54 5.054 5.451 3.369 9.762 8.076 12.933 14.121 3.27 5.946 4.905 12.635 4.905 20.068 0 7.432-1.635 14.122-4.905 20.067-3.171 5.946-7.482 10.654-12.933 14.122-5.351 3.37-11.198 5.054-17.54 5.054Zm-2.825-15.013c3.865 0 7.433-.991 10.703-2.973 3.369-1.982 6.045-4.807 8.027-8.473 2.081-3.766 3.122-8.027 3.122-12.784 0-4.757-1.041-8.969-3.122-12.635-1.982-3.766-4.658-6.64-8.027-8.622-3.27-1.982-6.838-2.973-10.703-2.973-3.865 0-7.482.991-10.851 2.973-3.27 1.982-5.946 4.806-8.027 8.473-1.982 3.667-2.973 7.928-2.973 12.784 0 4.856.991 9.117 2.973 12.784 2.081 3.666 4.757 6.491 8.027 8.473 3.369 1.982 6.986 2.973 10.851 2.973ZM401.365 161.434c-7.235 0-13.775-1.685-19.622-5.055-5.748-3.369-10.257-8.027-13.527-13.973-3.27-6.045-4.905-12.783-4.905-20.216 0-7.135 1.536-13.676 4.608-19.622 3.171-6.045 7.581-10.801 13.229-14.27 5.649-3.567 12.091-5.351 19.325-5.351 7.432 0 13.874 1.635 19.324 4.905 5.55 3.27 9.762 7.83 12.635 13.676 2.874 5.748 4.311 12.387 4.311 19.919 0 .892-.049 1.784-.148 2.676-.1.891-.149 1.387-.149 1.486h-56.784c.495 6.739 2.923 11.942 7.284 15.608 4.36 3.667 9.315 5.5 14.865 5.5 8.522 0 15.063-3.964 19.621-11.892l13.973 6.69c-3.27 6.045-7.828 10.9-13.675 14.567-5.748 3.568-12.536 5.352-20.365 5.352Zm18.73-48.311c-.199-2.379-.991-4.807-2.379-7.284-1.387-2.478-3.567-4.559-6.54-6.243-2.874-1.784-6.491-2.676-10.852-2.676-4.856 0-9.067 1.486-12.635 4.459-3.468 2.973-5.847 6.888-7.135 11.744h39.541ZM317.93 85.325h15.459v11h.892c1.586-3.766 4.46-6.887 8.622-9.365 4.162-2.576 8.423-3.864 12.784-3.864 3.567 0 6.491.495 8.77 1.486v17.095c-3.37-1.685-7.135-2.527-11.297-2.527-5.352 0-9.861 2.081-13.528 6.243-3.567 4.063-5.351 9.067-5.351 15.013v38.649H317.93v-73.73ZM294.594 72.838c-3.072 0-5.698-1.04-7.879-3.121-2.081-2.18-3.121-4.806-3.121-7.879 0-3.072 1.04-5.648 3.121-7.73 2.181-2.18 4.807-3.27 7.879-3.27 3.072 0 5.648 1.09 7.73 3.27 2.18 2.082 3.27 4.658 3.27 7.73s-1.09 5.699-3.27 7.879c-2.082 2.08-4.658 3.121-7.73 3.121Zm-8.176 12.487h16.351v73.73h-16.351v-73.73ZM211.938 52.622H276.6v15.906h-48.014v30.621h43.257v15.757h-43.257v44.149h-16.648V52.622Z"/><path fill="#FF9100" d="M51.227 191.109a77.714 77.714 0 0 0 26.359 5.568 77.468 77.468 0 0 0 35.304-7.116 109.954 109.954 0 0 1-34.417-21.609c-6.438 10.308-15.96 18.449-27.245 23.157Z"/><path fill="#FFC400" d="M78.471 167.955c-22.67-20.967-36.423-51.314-35.261-84.6.038-1.08.095-2.16.161-3.24a58.722 58.722 0 0 0-30.66.32 77.424 77.424 0 0 0-10.159 35.793c-1.174 33.624 19.173 63.003 48.674 74.884a58.878 58.878 0 0 0 27.245-23.157Z"/><path fill="#FF9100" d="M78.472 167.954c5.27-8.435 8.467-18.324 8.839-28.978.978-28.026-17.862-52.135-43.939-58.862-.066 1.08-.123 2.16-.161 3.24-1.162 33.286 12.59 63.633 35.261 84.6Z"/><path fill="#DD2C00" d="M84.394 1.335C69.544 13.233 57.816 28.921 50.72 46.994a109.67 109.67 0 0 0-7.36 33.127c26.076 6.727 44.917 30.836 43.939 58.862a58.48 58.48 0 0 1-8.84 28.978 109.787 109.787 0 0 0 34.418 21.609c25.79-11.921 44.088-37.574 45.148-67.916.686-19.659-6.867-37.18-17.54-51.969-11.271-15.64-56.09-68.35-56.09-68.35Z"/></svg>                                                                                                                                                                             </div>
+          <div class="label">Firebase.js</div>
+        </td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+      </tr>
     
 
-			<tr data-row="2">
-				<td class="cell">
-					<div class="frame">
-						<svg width="1024" height="851" viewBox="0 0 1024 851" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M877.552 1.13467L297.437 0L284.949 10.212L283.814 24.9627H224.78L217.969 28.3667L211.157 39.7133V49.9253L196.399 48.7907L188.452 53.3293L183.911 76.0227H168.018L160.071 80.5613L156.665 87.3693V103.255H141.907L132.825 108.928L129.419 115.736V131.621L113.525 130.487L105.579 135.025L102.173 141.833L103.308 157.719L86.2794 158.853L76.0621 170.2V208.779L63.5743 211.048L53.357 220.125L52.2217 260.973L38.5987 262.108L28.3814 272.32L26.1109 315.437L7.94678 318.841L0 331.323L1.13525 601.373L12.4878 611.585L27.2461 612.72L28.3814 653.568L36.3282 661.511L48.816 662.645L49.9512 673.992L56.7627 684.204L65.8448 688.743H78.3326L79.4678 705.763L89.6851 714.84L102.173 715.975L103.308 729.591L110.12 738.668L122.608 743.207H156.665L157.8 809.017L164.612 815.825L183.911 818.095V832.845L192.993 847.596L199.805 851H210.022L217.969 845.327H834.412L841.224 849.865L854.847 848.731L868.47 830.576L869.605 797.671L866.2 770.439L958.155 769.304L968.372 757.957L969.508 743.207L980.86 742.072L989.942 734.129L995.619 723.917V715.975L1013.78 713.705L1020.59 706.897L1022.86 641.087L1020.59 577.545L1024 569.603V559.391L1019.46 551.448L1012.65 548.044H993.348L995.619 532.159L993.348 418.692L996.754 400.537L988.807 390.325L969.508 389.191V196.297L961.561 186.085L942.262 184.951V65.8107L939.991 56.7333L933.18 49.9253L916.151 48.7907L915.016 32.9053L910.474 24.9627L892.31 21.5587L887.769 7.94267L877.552 1.13467Z" fill="#E9EEEB"/><path d="M977.455 566.199L976.319 567.333V568.468V695.551L975.184 696.685H974.049H949.073V722.783H950.208H951.344H976.319V697.82H979.725H980.86H983.131H987.672H989.942H996.754H997.889H999.024H1001.29H1002.43L1003.57 696.685V566.199H977.455Z" fill="#0C1019"/><path d="M384.851 94.1774V142.968V300.687V305.225V309.764V330.188V333.592L407.557 334.727V493.58H897.987L899.122 492.445V355.151H873.011V152.045H848.035V95.312L846.9 94.1774H458.643H457.508H384.851Z" fill="#0C1019"/><path d="M412.098 331.323L434.803 333.592H435.938L437.073 461.809H868.47V411.884L845.765 410.749L844.63 205.375L823.06 204.24L821.925 203.105V123.679H412.098V331.323Z" fill="#BECFCB"/><path d="M712.94 351.747L711.805 352.881V354.016V382.383V383.517H712.94H737.916H739.051V351.747H712.94Z" fill="#0C1019"/><path d="M564.222 351.747V357.42V364.228V366.497V368.767V383.517L590.333 384.652V410.749V411.884L591.468 413.019H711.805V384.652V383.517H591.468V352.881V351.747H564.222Z" fill="#0C1019"/><path d="M643.69 240.549V241.684V334.727H644.825H670.936H672.071L673.206 333.592V332.457V241.684V240.549H672.071H643.69Z" fill="#0C1019"/><path d="M702.723 184.951V280.263H708.399H709.534H733.375V184.951H717.481H716.346H708.399H704.993H702.723Z" fill="#0C1019"/><path d="M531.299 184.951V186.085L532.435 280.263H533.57H535.84H536.976H538.111H544.922H554.004H561.951V184.951H560.816H559.681H558.545H554.004H551.734H535.84H534.705H532.435H531.299Z" fill="#0C1019"/><path d="M303.113 43.1173V18.1547H873.011V38.5787V43.1173L899.122 44.252V69.2147H925.233V73.7533V91.908V93.0427V106.659V107.793V110.063V111.197V119.14V121.409V123.679V125.948V128.217V130.487V131.621V132.756V133.891V139.564V140.699V147.507V152.045V174.739V179.277V180.412V182.681L926.368 201.971L947.938 203.105H950.208L951.344 408.48H976.319V566.199H971.778H949.073L947.938 408.48H943.397H936.585H926.368H925.233L924.098 407.345V203.105H897.987V73.7533V70.3493H870.741V48.7907V46.5213L330.359 48.7907V52.1947V54.464V55.5987V64.676V65.8107V68.08V69.2147L307.654 70.3493L305.384 69.2147L304.248 70.3493V152.045L330.359 153.18V163.392V164.527V200.836V201.971V207.644V209.913V217.856V218.991V234.876V237.145V254.165V255.3V272.32V273.455V274.589V275.724V276.859V279.128V280.263V282.532V291.609V292.744V300.687V301.821V302.956V305.225V309.764V310.899V312.033V313.168V315.437V319.976V325.649V326.784V334.727V335.861V336.996V338.131V344.939V346.073V354.016V358.555V359.689V360.824V361.959V373.305V405.076V406.211V408.48V409.615L331.494 410.749H336.035H338.306H340.576H341.712H345.117H354.2H358.741V697.82H331.494V722.783H949.073V723.917V750.015H849.171L848.035 827.172V828.307H844.63H206.616H203.211V827.172L202.075 799.94H200.94H181.641H177.1H175.965L174.829 722.783H123.743L122.608 697.82H108.984H107.849H99.9024H98.7672L97.6319 670.588H72.6563H71.521L70.3858 645.625H44.2749V593.431H18.1641L17.0288 592.296V518.543V512.869V511.735V510.6V508.331V507.196V417.557V416.423V334.727H18.1641H44.2749V333.592V281.397L45.4102 280.263H70.3858L71.521 241.684V240.549V239.415V237.145V233.741V232.607V228.068V226.933H97.6319V177.008L98.7672 175.873L122.608 173.604V167.931V153.18L123.743 152.045H148.718V120.275H174.829V95.312L175.965 94.1773H181.641H187.317H199.805L202.075 93.0427V82.8307V70.3493L228.186 69.2147L229.321 68.08V44.252H230.457H231.592L303.113 43.1173Z" fill="#0C1019"/><path d="M331.494 751.149V752.284L332.63 801.075H817.384H818.519H819.654L821.925 799.94V798.805V781.785V777.247V776.112V773.843V771.573V754.553V752.284V751.149H331.494Z" fill="#E9EEEB"/><rect x="412" y="589" width="25" height="67" fill="#0C1019"/><rect x="497" y="589" width="25" height="67" fill="#0C1019"/><rect x="437" y="566" width="60" height="23" fill="#0C1019"/><rect x="437" y="656" width="60" height="23" fill="#0C1019"/><rect x="842" y="589" width="25" height="67" fill="#0C1019"/><rect x="927" y="589" width="25" height="67" fill="#0C1019"/><rect x="867" y="566" width="60" height="23" fill="#0C1019"/><rect x="867" y="656" width="60" height="23" fill="#0C1019"/></svg>
-					</div>
-					<div class="label">Openhunts</div>
-				</td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-			</tr>
+      <tr data-row="2">
+        <td class="cell">
+          <div class="frame">
+            <svg width="1024" height="851" viewBox="0 0 1024 851" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M877.552 1.13467L297.437 0L284.949 10.212L283.814 24.9627H224.78L217.969 28.3667L211.157 39.7133V49.9253L196.399 48.7907L188.452 53.3293L183.911 76.0227H168.018L160.071 80.5613L156.665 87.3693V103.255H141.907L132.825 108.928L129.419 115.736V131.621L113.525 130.487L105.579 135.025L102.173 141.833L103.308 157.719L86.2794 158.853L76.0621 170.2V208.779L63.5743 211.048L53.357 220.125L52.2217 260.973L38.5987 262.108L28.3814 272.32L26.1109 315.437L7.94678 318.841L0 331.323L1.13525 601.373L12.4878 611.585L27.2461 612.72L28.3814 653.568L36.3282 661.511L48.816 662.645L49.9512 673.992L56.7627 684.204L65.8448 688.743H78.3326L79.4678 705.763L89.6851 714.84L102.173 715.975L103.308 729.591L110.12 738.668L122.608 743.207H156.665L157.8 809.017L164.612 815.825L183.911 818.095V832.845L192.993 847.596L199.805 851H210.022L217.969 845.327H834.412L841.224 849.865L854.847 848.731L868.47 830.576L869.605 797.671L866.2 770.439L958.155 769.304L968.372 757.957L969.508 743.207L980.86 742.072L989.942 734.129L995.619 723.917V715.975L1013.78 713.705L1020.59 706.897L1022.86 641.087L1020.59 577.545L1024 569.603V559.391L1019.46 551.448L1012.65 548.044H993.348L995.619 532.159L993.348 418.692L996.754 400.537L988.807 390.325L969.508 389.191V196.297L961.561 186.085L942.262 184.951V65.8107L939.991 56.7333L933.18 49.9253L916.151 48.7907L915.016 32.9053L910.474 24.9627L892.31 21.5587L887.769 7.94267L877.552 1.13467Z" fill="#E9EEEB"/><path d="M977.455 566.199L976.319 567.333V568.468V695.551L975.184 696.685H974.049H949.073V722.783H950.208H951.344H976.319V697.82H979.725H980.86H983.131H987.672H989.942H996.754H997.889H999.024H1001.29H1002.43L1003.57 696.685V566.199H977.455Z" fill="#0C1019"/><path d="M384.851 94.1774V142.968V300.687V305.225V309.764V330.188V333.592L407.557 334.727V493.58H897.987L899.122 492.445V355.151H873.011V152.045H848.035V95.312L846.9 94.1774H458.643H457.508H384.851Z" fill="#0C1019"/><path d="M412.098 331.323L434.803 333.592H435.938L437.073 461.809H868.47V411.884L845.765 410.749L844.63 205.375L823.06 204.24L821.925 203.105V123.679H412.098V331.323Z" fill="#BECFCB"/><path d="M712.94 351.747L711.805 352.881V354.016V382.383V383.517H712.94H737.916H739.051V351.747H712.94Z" fill="#0C1019"/><path d="M564.222 351.747V357.42V364.228V366.497V368.767V383.517L590.333 384.652V410.749V411.884L591.468 413.019H711.805V384.652V383.517H591.468V352.881V351.747H564.222Z" fill="#0C1019"/><path d="M643.69 240.549V241.684V334.727H644.825H670.936H672.071L673.206 333.592V332.457V241.684V240.549H672.071H643.69Z" fill="#0C1019"/><path d="M702.723 184.951V280.263H708.399H709.534H733.375V184.951H717.481H716.346H708.399H704.993H702.723Z" fill="#0C1019"/><path d="M531.299 184.951V186.085L532.435 280.263H533.57H535.84H536.976H538.111H544.922H554.004H561.951V184.951H560.816H559.681H558.545H554.004H551.734H535.84H534.705H532.435H531.299Z" fill="#0C1019"/><path d="M303.113 43.1173V18.1547H873.011V38.5787V43.1173L899.122 44.252V69.2147H925.233V73.7533V91.908V93.0427V106.659V107.793V110.063V111.197V119.14V121.409V123.679V125.948V128.217V130.487V131.621V132.756V133.891V139.564V140.699V147.507V152.045V174.739V179.277V180.412V182.681L926.368 201.971L947.938 203.105H950.208L951.344 408.48H976.319V566.199H971.778H949.073L947.938 408.48H943.397H936.585H926.368H925.233L924.098 407.345V203.105H897.987V73.7533V70.3493H870.741V48.7907V46.5213L330.359 48.7907V52.1947V54.464V55.5987V64.676V65.8107V68.08V69.2147L307.654 70.3493L305.384 69.2147L304.248 70.3493V152.045L330.359 153.18V163.392V164.527V200.836V201.971V207.644V209.913V217.856V218.991V234.876V237.145V254.165V255.3V272.32V273.455V274.589V275.724V276.859V279.128V280.263V282.532V291.609V292.744V300.687V301.821V302.956V305.225V309.764V310.899V312.033V313.168V315.437V319.976V325.649V326.784V334.727V335.861V336.996V338.131V344.939V346.073V354.016V358.555V359.689V360.824V361.959V373.305V405.076V406.211V408.48V409.615L331.494 410.749H336.035H338.306H340.576H341.712H345.117H354.2H358.741V697.82H331.494V722.783H949.073V723.917V750.015H849.171L848.035 827.172V828.307H844.63H206.616H203.211V827.172L202.075 799.94H200.94H181.641H177.1H175.965L174.829 722.783H123.743L122.608 697.82H108.984H107.849H99.9024H98.7672L97.6319 670.588H72.6563H71.521L70.3858 645.625H44.2749V593.431H18.1641L17.0288 592.296V518.543V512.869V511.735V510.6V508.331V507.196V417.557V416.423V334.727H18.1641H44.2749V333.592V281.397L45.4102 280.263H70.3858L71.521 241.684V240.549V239.415V237.145V233.741V232.607V228.068V226.933H97.6319V177.008L98.7672 175.873L122.608 173.604V167.931V153.18L123.743 152.045H148.718V120.275H174.829V95.312L175.965 94.1773H181.641H187.317H199.805L202.075 93.0427V82.8307V70.3493L228.186 69.2147L229.321 68.08V44.252H230.457H231.592L303.113 43.1173Z" fill="#0C1019"/><path d="M331.494 751.149V752.284L332.63 801.075H817.384H818.519H819.654L821.925 799.94V798.805V781.785V777.247V776.112V773.843V771.573V754.553V752.284V751.149H331.494Z" fill="#E9EEEB"/><rect x="412" y="589" width="25" height="67" fill="#0C1019"/><rect x="497" y="589" width="25" height="67" fill="#0C1019"/><rect x="437" y="566" width="60" height="23" fill="#0C1019"/><rect x="437" y="656" width="60" height="23" fill="#0C1019"/><rect x="842" y="589" width="25" height="67" fill="#0C1019"/><rect x="927" y="589" width="25" height="67" fill="#0C1019"/><rect x="867" y="566" width="60" height="23" fill="#0C1019"/><rect x="867" y="656" width="60" height="23" fill="#0C1019"/></svg>                                                                                                                                                                                                                                         </div>
+          <div class="label">Openhunts</div>
+        </td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+      </tr>
     
 
-			<tr data-row="3">
-				<td class="cell">
-					<div class="frame">
-						<svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="90.737%" y1="34.776%" x2="35.509%" y2="55.415%" id="sol__a"><stop stop-color="#00FFA3" offset="0%"/><stop stop-color="#DC1FFF" offset="100%"/></linearGradient><linearGradient x1="66.588%" y1="43.8%" x2="11.36%" y2="64.439%" id="sol__b"><stop stop-color="#00FFA3" offset="0%"/><stop stop-color="#DC1FFF" offset="100%"/></linearGradient><linearGradient x1="78.586%" y1="39.317%" x2="23.358%" y2="59.956%" id="sol__c"><stop stop-color="#00FFA3" offset="0%"/><stop stop-color="#DC1FFF" offset="100%"/></linearGradient></defs><g fill="none" fill-rule="nonzero"><circle fill="#181E33" cx="18" cy="18" r="18"/><path d="M3.9 14.355a.785.785 0 0 1 .554-.23h19.153c.35 0 .525.423.277.67l-3.783 3.784a.785.785 0 0 1-.555.23H.393a.392.392 0 0 1-.277-.67l3.783-3.784z" fill="url(#sol__a)" transform="translate(6 9)"/><path d="M3.9.23c.15-.146.35-.23.554-.23h19.153c.35 0 .525.422.277.67l-3.783 3.783a.785.785 0 0 1-.555.23H.393a.392.392 0 0 1-.277-.67L3.899.229z" fill="url(#sol__b)" transform="translate(6 9)"/><path d="M20.1 7.247a.785.785 0 0 0-.554-.23H.393a.392.392 0 0 0-.277.67l3.783 3.784c.145.145.344.23.555.23h19.153c.35 0 .525-.423.277-.67l-3.783-3.784z" fill="url(#sol__c)" transform="translate(6 9)"/></g></svg>
-					</div>
-					<div class="label">Solana, A Crypto coin</div>
-				</td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-			</tr>
+      <tr data-row="3">
+        <td class="cell">
+          <div class="frame">
+            <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="90.737%" y1="34.776%" x2="35.509%" y2="55.415%" id="sol__a"><stop stop-color="#00FFA3" offset="0%"/><stop stop-color="
+#DC1FFF" offset="100%"/></linearGradient><linearGradient x1="66.588%" y1="43.8%" x2="11.36%" y2="64.439%" id="sol__b"><stop stop-color="#00FFA3" offset="0%"/><stop stop-color="#DC1FFF" offset="100%"/></linearGradient><linearGradient x1="78.586%" y1="39.317%" x2="23.358%" y2="59.956%" id="sol__c"><stop stop-color="#00FFA3" offset="0%"/><stop stop-color="#DC1FFF" offset="100%"/></linearGradient></defs><g fill="none" fill-rule="nonzero"><circle fill="#181E33" cx="18" cy="18" r="18"/><path d="M3.9 14.355a.785.785 0 0 1 .554-.23h19.153c.35 0 .525.423.277.67l-3.783 3.784a.785.785 0 0 1-.555.23H.393a.392.392 0 0 1-.277-.67l3.783-3.784z" fill="url(#sol__a)" transform="translate(6 9)"/><path d="M3.9.23c.15-.146.35-.23.554-.23h19.153c.35 0 .525.422.277.67l-3.783 3.783a.785.785 0 0 1-.555.23H.393a.392.392 0 0 1-.277-.67L3.899.229z" fill="url(#sol__b)" transform="translate(6 9)"/><path d="M20.1 7.247a.785.785 0 0 0-.554-.23H.393a.392.392 0 0 0-.277.67l3.783 3.784c.145.145.344.23.555.23h19.153c.35 0 .525-.423.277-.67l-3.783-3.784z" fill="url(#sol__c)" transform="translate(6 9)"/></g></svg>                                                                                                                </div>
+          <div class="label">Solana, A Crypto coin</div>
+        </td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+      </tr>
     
 
-			<tr data-row="4">
-				<td class="cell">
-					<div class="frame">
-						<svg width="54" height="80" viewBox="0 0 54 80" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#figma__clip0_912_3)"><path d="M13.3333 80.0002C20.6933 80.0002 26.6667 74.0268 26.6667 66.6668V53.3335H13.3333C5.97333 53.3335 0 59.3068 0 66.6668C0 74.0268 5.97333 80.0002 13.3333 80.0002Z" fill="#0ACF83"/><path d="M0 39.9998C0 32.6398 5.97333 26.6665 13.3333 26.6665H26.6667V53.3332H13.3333C5.97333 53.3332 0 47.3598 0 39.9998Z" fill="#A259FF"/><path d="M0 13.3333C0 5.97333 5.97333 0 13.3333 0H26.6667V26.6667H13.3333C5.97333 26.6667 0 20.6933 0 13.3333Z" fill="#F24E1E"/><path d="M26.6667 0H40.0001C47.3601 0 53.3334 5.97333 53.3334 13.3333C53.3334 20.6933 47.3601 26.6667 40.0001 26.6667H26.6667V0Z" fill="#FF7262"/><path d="M53.3334 39.9998C53.3334 47.3598 47.3601 53.3332 40.0001 53.3332C32.6401 53.3332 26.6667 47.3598 26.6667 39.9998C26.6667 32.6398 32.6401 26.6665 40.0001 26.6665C47.3601 26.6665 53.3334 32.6398 53.3334 39.9998Z" fill="#1ABCFE"/></g><defs><clipPath id="figma__clip0_912_3"><rect width="53.3333" height="80" fill="white"/></clipPath></defs></svg>
-					</div>
-					<div class="label">Figma</div>
-				</td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-			</tr>
+      <tr data-row="4">
+        <td class="cell">
+          <div class="frame">
+            <svg width="54" height="80" viewBox="0 0 54 80" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#figma__clip0_912_3)"><path d="M13.3333 80.0002C20.6933 80.0002 26.6667 74.0268 26.6667 66.6668V53.3335H13.3333C5.
+97333 53.3335 0 59.3068 0 66.6668C0 74.0268 5.97333 80.0002 13.3333 80.0002Z" fill="#0ACF83"/><path d="M0 39.9998C0 32.6398 5.97333 26.6665 13.3333 26.6665H26.6667V53.3332H13.3333C5.97333 53.3332 0 47.3598 0 39.9998Z" fill="#A259FF"/><path d="M0 13.3333C0 5.97333 5.97333 0 13.3333 0H26.6667V26.6667H13.3333C5.97333 26.6667 0 20.6933 0 13.3333Z" fill="#F24E1E"/><path d="M26.6667 0H40.0001C47.3601 0 53.3334 5.97333 53.3334 13.3333C53.3334 20.6933 47.3601 26.6667 40.0001 26.6667H26.6667V0Z" fill="#FF7262"/><path d="M53.3334 39.9998C53.3334 47.3598 47.3601 53.3332 40.0001 53.3332C32.6401 53.3332 26.6667 47.3598 26.6667 39.9998C26.6667 32.6398 32.6401 26.6665 40.0001 26.6665C47.3601 26.6665 53.3334 32.6398 53.3334 39.9998Z" fill="#1ABCFE"/></g><defs><clipPath id="figma__clip0_912_3"><rect width="53.3333" height="80" fill="white"/></clipPath></defs></svg>                                                                                                          </div>
+          <div class="label">Figma</div>
+        </td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+      </tr>
     
 
-			<tr data-row="5">
-				<td class="cell">
-					<div class="frame">
-						<svg viewBox="0 0 1155 164" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M160 82c0-45 36-81 82-81s83 36 83 81c0 44-37 80-83 80s-82-36-82-80zm125 0a43 43 0 0 0-86 0 43 43 0 0 0 86 0zm706 1c0-49 40-82 76-82 24 0 38 8 48 22l3-19h37v155h-37l-4-16c-11 12-25 19-47 19-36 0-76-31-76-79zm126 0c0-24-20-43-43-43-24 0-43 19-43 43 0 21 19 41 42 41 24 0 44-20 44-41zM946 22V4h-40v155h40V76c0-26 12-39 34-39l4 1 7-38c-21 0-36 7-45 22zm-404 0V4h-41l1 155h40V76c0-26 12-39 34-39l4 1 7-38c-21 0-36 7-45 22zM339 99V4h40v90c0 20 11 32 31 32 21 0 34-13 34-38V4h40v155h-40v-18c-10 15-25 22-47 22-36 0-58-26-58-64zm392-17c0-44 31-81 80-81 46 0 78 37 78 80l-1 13H770c4 18 20 32 43 32 14 0 29-5 38-17l28 22a80 80 0 0 1-66 31c-47 0-82-35-82-80zm118-16c-3-16-19-28-38-28s-34 11-40 27l78 1zm-262 60 36-19c6 13 18 20 35 20 15 0 21-5 21-12 0-25-85-10-85-67 0-31 28-48 62-48 26 0 49 12 61 33l-35 19c-5-11-15-17-28-17-12 0-18 5-18 12 0 24 85 9 85 67 0 30-25 48-64 48-34 0-58-11-70-36zM0 82C0 37 37 1 82 1c28 0 55 13 70 37l-34 20a43 43 0 0 0-36-19c-23 0-42 20-42 43 0 22 19 42 42 42a43 43 0 0 0 37-20l34 20A83 83 0 0 1 0 82z" fill="#0056D2" fill-rule="nonzero"/></svg>
-					</div>
-					<div class="label">Coursera</div>
-				</td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-				<td class="cell"><div class="frame"></div></td>
-			</tr>
+      <tr data-row="5">
+        <td class="cell">
+          <div class="frame">
+            <svg viewBox="0 0 1155 164" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M160 82c0-45 36-81 82-81s83 36 83 81c0 44-37 80-83 80s-82-36-82-80zm1
+25 0a43 43 0 0 0-86 0 43 43 0 0 0 86 0zm706 1c0-49 40-82 76-82 24 0 38 8 48 22l3-19h37v155h-37l-4-16c-11 12-25 19-47 19-36 0-76-31-76-79zm126 0c0-24-20-43-43-43-24 0-43 19-43 43 0 21 19 41 42 41 24 0 44-20 44-41zM946 22V4h-40v155h40V76c0-26 12-39 34-39l4 1 7-38c-21 0-36 7-45 22zm-404 0V4h-41l1 155h40V76c0-26 12-39 34-39l4 1 7-38c-21 0-36 7-45 22zM339 99V4h40v90c0 20 11 32 31 32 21 0 34-13 34-38V4h40v155h-40v-18c-10 15-25 22-47 22-36 0-58-26-58-64zm392-17c0-44 31-81 80-81 46 0 78 37 78 80l-1 13H770c4 18 20 32 43 32 14 0 29-5 38-17l28 22a80 80 0 0 1-66 31c-47 0-82-35-82-80zm118-16c-3-16-19-28-38-28s-34 11-40 27l78 1zm-262 60 36-19c6 13 18 20 35 20 15 0 21-5 21-12 0-25-85-10-85-67 0-31 28-48 62-48 26 0 49 12 61 33l-35 19c-5-11-15-17-28-17-12 0-18 5-18 12 0 24 85 9 85 67 0 30-25 48-64 48-34 0-58-11-70-36zM0 82C0 37 37 1 82 1c28 0 55 13 70 37l-34 20a43 43 0 0 0-36-19c-23 0-42 20-42 43 0 22 19 42 42 42a43 43 0 0 0 37-20l34 20A83 83 0 0 1 0 82z" fill="#0056D2" fill-rule="nonzero"/></svg>                                                                                                                                                                                                                  </div>
+          <div class="label">Coursera</div>
+        </td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+      </tr>
     
 
-			<tr data-row="6">
-				<td class="cell">
-					<div class="frame">
-					 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 66.165833 65.803795"><defs><linearGradient id="safari__b"><stop offset="0" stop-color="#06c2e7"/><stop offset=".25000015" stop-color="#0db8ec"/><stop offset=".5000003" stop-color="#12aef1"/><stop offset=".75000012" stop-color="#1f86f9"/><stop offset="1" stop-color="#107ddd"/></linearGradient><linearGradient id="safari__a"><stop offset="0" stop-color="#bdbdbd"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient xlink:href="#safari__a" id="safari__d" x1="412.97501" x2="412.97501" y1="237.60777" y2="59.392235" gradientTransform="translate(206.79018 159.77261) scale(.35154)" gradientUnits="userSpaceOnUse"/><filter id="safari__f" width="1.0418189" height="1.0446756" x="-.02090938" y="-.0223378" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation=".95767362"/></filter><filter id="safari__c" width="1.096" height="1.096" x="-.048" y="-.048" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="3.5643107"/></filter><radialGradient xlink:href="#safari__b" id="safari__e" cx="413.06128" cy="136.81819" r="82.125351" fx="413.06128" fy="136.81819" gradientTransform="translate(194.54473 155.58044) scale(.38143)" gradientUnits="userSpaceOnUse"/></defs><path d="M502.08277 148.5a89.107765 89.107765 0 0 1-89.10777 89.10777 89.107765 89.107765 0 0 1-89.10776-89.10777 89.107765 89.107765 0 0 1 89.10776-89.107765A89.107765 89.107765 0 0 1 502.08277 148.5Z" filter="url(#safari__c)" opacity=".52999998" paint-order="markers stroke fill" transform="matrix(.33865 0 0 .3261 -106.76956 -14.47833)"/><path fill="url(#safari__d)" stroke="#cdcdcd" stroke-linecap="round" stroke-linejoin="round" stroke-width=".09301235" d="M383.29373 211.97671a31.325188 31.325188 0 0 1-31.32519 31.32519 31.325188 31.325188 0 0 1-31.32518-31.32519 31.325188 31.325188 0 0 1 31.32518-31.32519 31.325188 31.325188 0 0 1 31.32519 31.32519z" paint-order="markers stroke fill" transform="translate(-318.88562 -180.59501)"/><path fill="url(#safari__e)" d="M380.83911 211.97671a28.870571 28.870571 0 0 1-28.87057 28.87057 28.870571 28.870571 0 0 1-28.87057-28.87057 28.870571 28.870571 0 0 1 28.87057-28.87057 28.870571 28.870571 0 0 1 28.87057 28.87057z" paint-order="markers stroke fill" transform="translate(-318.88562 -180.59501)"/><path fill="#f4f2f3" d="M33.08292 4.01671c-.23319 0-.42092.18772-.42092.42092V9.2928c0 .2332.18773.42092.42092.42092.2332 0 .42092-.18772.42092-.42092V4.43763c0-.2332-.18772-.42092-.42092-.42092zm-2.75367.17404c-.0279-.003-.0566-.003-.0856.00035-.23194.0242-.39917.2304-.37495.46234l.21218 2.03119c.0242.23194.23041.39918.46233.37496.23195-.0242.39919-.2304.37496-.46234l-.212-2.03118c-.0212-.20295-.18177-.35637-.37695-.37532zm5.5266.002c-.19519.0188-.35578.17221-.37714.37513l-.21363 2.03102c-.0244.23192.14285.43831.37478.4627.23191.0244.43811-.14268.46251-.3746l.21364-2.03119c.0244-.23192-.14286-.43814-.37478-.46252-.029-.003-.0575-.003-.0854-.00052zm-8.3553.4082c-.028.00022-.0565.003-.085.009-.22814.0483-.37294.27089-.32464.49903l1.00552 4.74981c.0483.22814.27088.37293.49902.32464.22814-.0483.37294-.27072.32465-.49886l-1.00552-4.74998c-.0423-.19963-.21792-.33543-.41401-.3339zm11.18382.004c-.19609-.002-.3718.13394-.41419.33353l-1.00897 4.74925c-.0485.22811.0962.45076.32427.49922.22811.0485.45076-.0962.49921-.32428l1.00897-4.74926c.0485-.2281-.0962-.45076-.32427-.49921-.0285-.006-.057-.009-.085-.009zM24.801 5.36212c-.0545-.005-.11077.001-.16622.0194-.22178.0721-.34238.3085-.27031.53028l.6311 1.94236c.0721.22179.30868.34238.53046.27032.22179-.0721.3422-.30868.27013-.53046l-.63109-1.94236c-.054-.16634-.20059-.27568-.36407-.28958zm16.56765.001c-.16348.0139-.30999.12324-.36406.28957l-.63147 1.94218c-.0721.22177.0484.45837.27014.53046.22178.0721.45837-.0484.53047-.27013l.63146-1.94236c.0721-.22178-.0484-.45837-.27014-.53046-.0554-.018-.11191-.0239-.1664-.0193zm-19.23721.9759c-.0547.001-.11004.013-.16331.0367-.21298.0947-.30836.34244-.21364.55553l1.97197 4.43662c.0947.21308.34244.30836.55553.21364.21298-.0947.30854-.34244.21382-.55553l-1.97216-4.43662c-.071-.15983-.22817-.25351-.39221-.25033zm21.93693.0149c-.16403-.003-.32132.0901-.39257.24979l-1.97798 4.4339c-.095.21296-.00004.46088.21292.55589.21297.095.46088.00005.5559-.21291L44.4446 6.9467c.095-.21297.00005-.46089-.21291-.5559-.0532-.0237-.10864-.0357-.16332-.0369zM19.65353 7.6501c-.0808-.006-.16406.012-.23979.0558-.20196.1166-.27065.37302-.15406.57497l1.02115 1.76869c.1166.20196.373.27065.57496.15405.20195-.1166.27065-.37301.15406-.57497L19.9887 7.85996c-.0729-.12623-.20047-.20041-.33517-.20983zm26.85877 0c-.13468.009-.26211.0836-.33498.20983l-1.02133 1.76868c-.1166.20196-.0477.45837.15424.57497.20196.1166.45837.0479.57497-.15405l1.02114-1.76869c.1166-.20195.0479-.45837-.15406-.57497-.0757-.0437-.15916-.0614-.23998-.0558zM17.24739 9.15083c-.081.003-.16211.029-.2329.0803-.18875.13693-.23048.39911-.0935.58787l2.85086 3.92995c.13693.18876.39929.23049.58805.0936.18876-.13693.23049-.39911.0935-.58787l-2.85104-3.92995c-.0856-.11798-
+      <tr data-row="6">
+        <td class="cell">
+          <div class="frame">
+           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 66.165833 65.803795"><defs><linearGradient id="safari__b"><stop offset="0" stop-color="#06c2e7"/><stop offset=".25000015" stop-color
+="#0db8ec"/><stop offset=".5000003" stop-color="#12aef1"/><stop offset=".75000012" stop-color="#1f86f9"/><stop offset="1" stop-color="#107ddd"/></linearGradient><linearGradient id="safari__a"><stop offset="0" stop-color="#bdbdbd"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient xlink:href="#safari__a" id="safari__d" x1="412.97501" x2="412.97501" y1="237.60777" y2="59.392235" gradientTransform="translate(206.79018 159.77261) scale(.35154)" gradientUnits="userSpaceOnUse"/><filter id="safari__f" width="1.0418189" height="1.0446756" x="-.02090938" y="-.0223378" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation=".95767362"/></filter><filter id="safari__c" width="1.096" height="1.096" x="-.048" y="-.048" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="3.5643107"/></filter><radialGradient xlink:href="#safari__b" id="safari__e" cx="413.06128" cy="136.81819" r="82.125351" fx="413.06128" fy="136.81819" gradientTransform="translate(194.54473 155.58044) scale(.38143)" gradientUnits="userSpaceOnUse"/></defs><path d="M502.08277 148.5a89.107765 89.107765 0 0 1-89.10777 89.10777A89.107765 89.107765 0 0 1 323.86724 148.5 89.107765 89.107765 0 0 1 412.975 59.392235 89.107765 89.107765 0 0 1 502.08277 148.5Z" filter="url(#safari__c)" opacity=".52999998" paint-order="markers stroke fill" transform="matrix(.33865 0 0 .3261 -106.76956 -14.47833)"/><path fill="url(#safari__d)" stroke="#cdcdcd" stroke-linecap="round" stroke-linejoin="round" stroke-width=".09301235" d="M383.29373 211.97671a31.325188 31.325188 0 0 1-31.32519 31.32519 31.325188 31.325188 0 0 1-31.32518-31.32519 31.325188 31.325188 0 0 1 31.32518-31.32519 31.325188 31.325188 0 0 1 31.32519 31.32519z" paint-order="markers stroke fill" transform="translate(-318.88562 -180.59501)"/><path fill="url(#safari__e)" d="M380.83911 211.97671a28.870571 28.870571 0 0 1-28.87057 28.87057 28.870571 28.870571 0 0 1-28.87057-28.87057 28.870571 28.870571 0 0 1 28.87057-28.87057 28.870571 28.870571 0 0 1 28.87057 28.87057z" paint-order="markers stroke fill" transform="translate(-318.88562 -180.59501)"/><path fill="#f4f2f3" d="M33.08292 4.01671c-.23319 0-.42092.18772-.42092.42092V9.2928c0 .2332.18773.42092.42092.42092.2332 0 .42092-.18772.42092-.42092V4.43763c0-.2332-.18772-.42092-.42092-.42092zm-2.75367.17404c-.0279-.003-.0566-.003-.0856.00035-.23194.0242-.39917.2304-.37495.46234l.21218 2.03119c.0242.23194.23041.39918.46233.37496.23195-.0242.39919-.2304.37496-.46234l-.212-2.03118c-.0212-.20295-.18177-.35637-.37695-.37532zm5.5266.002c-.19519.0188-.35578.17221-.37714.37513l-.21363 2.03102c-.0244.23192.14285.43831.37478.4627.23191.0244.43811-.14268.46251-.3746l.21364-2.03119c.0244-.23192-.14286-.43814-.37478-.46252-.029-.003-.0575-.003-.0854-.00052zm-8.3553.4082c-.028.00022-.0565.003-.085.009-.22814.0483-.37294.27089-.32464.49903l1.00552 4.74981c.0483.22814.27088.37293.49902.32464.22814-.0483.37294-.27072.32465-.49886l-1.00552-4.74998c-.0423-.19963-.21792-.33543-.41401-.3339zm11.18382.004c-.19609-.002-.3718.13394-.41419.33353l-1.00897 4.74925c-.0485.22811.0962.45076.32427.49922.22811.0485.45076-.0962.49921-.32428l1.00897-4.74926c.0485-.2281-.0962-.45076-.32427-.49921-.0285-.006-.057-.009-.085-.009zM24.801 5.36212c-.0545-.005-.11077.001-.16622.0194-.22178.0721-.34238.3085-.27031.53028l.6311 1.94236c.0721.22179.30868.34238.53046.27032.22179-.0721.3422-.30868.27013-.53046l-.63109-1.94236c-.054-.16634-.20059-.27568-.36407-.28958zm16.56765.001c-.16348.0139-.30999.12324-.36406.28957l-.63147 1.94218c-.0721.22177.0484.45837.27014.53046.22178.0721.45837-.0484.53047-.27013l.63146-1.94236c.0721-.22178-.0484-.45837-.27014-.53046-.0554-.018-.11191-.0239-.1664-.0193zm-19.23721.9759c-.0547.001-.11004.013-.16331.0367-.21298.0947-.30836.34244-.21364.55553l1.97197 4.43662c.0947.21308.34244.30836.55553.21364.21298-.0947.30854-.34244.21382-.55553l-1.97216-4.43662c-.071-.15983-.22817-.25351-.39221-.25033zm21.93693.0149c-.16403-.003-.32132.0901-.39257.24979l-1.97798 4.4339c-.095.21296-.00004.46088.21292.55589.21297.095.46088.00005.5559-.21291L44.4446 6.9467c.095-.21297.00005-.46089-.21291-.5559-.0532-.0237-.10864-.0357-.16332-.0369zM19.65353 7.6501c-.0808-.006-.16406.012-.23979.0558-.20196.1166-.27065.37302-.15406.57497l1.02115 1.76869c.1166.20196.373.27065.57496.15405.20195-.1166.27065-.37301.15406-.57497L19.9887 7.85996c-.0729-.12623-.20047-.20041-.33517-.20983zm26.85877 0c-.13468.009-.26211.0836-.33498.20983l-1.02133 1.76868c-.1166.20196-.0477.45837.15424.57497.20196.1166.45837.0479.57497-.15405l1.02114-1.76869c.1166-.20195.0479-.45837-.15406-.57497-.0757-.0437-.15916-.0614-.23998-.0558zM17.24739 9.15083c-.081.003-.16211.029-.2329.0803-.18875.13693-.23048.39911-.0935.58787l2.85086 3.92995c.13693.18876.39929.23049.58805.0936.18876-.13693.23049-.39911.0935-.58787l-2.85104-3.92995c-.0856-.11798-.22004-.17847-.35497-.17386zm31.70122.0214c-.13493-.005-.26941.0555-.35516.17331l-2.8563 3.92614c-.1372.18857-.0958.45086.0928.58805.18858.13718.45087.0959.58806-.0926l2.85613-3.92614c.13718-.18858.0957-.45086-.0928-.58805-.0707-.0514-.15176-.0778-.23272-.0807zm-33.85196 1.78231c-.10744-.006-.21708.0299-.30374.10791-.17332.15602-.18725.42109-.0312.59441l1.36648 1.51799c.15601.17332.42109.18726.59441.0312.17332-.15602.18726-.42127.0312-.59459l-1.3663-1.51781c-.078-.0867-.18339-.13351-.29085-.13916zm35.97562.003c-.10745.006-.21282.0525-.29084.13915l-1.36648 1.51763c-.15606.1733-.14224.43855.0311.59459.17329.15604.43837.14205.59441-.0312l1.36666-1.51762c.15605-.17331.14205-.43856-.0312-.59459-.0867-.078-.19611-.11354-.30357-.10791zm-38.03696 1.97705c-.10745.006-.21266.0525-.29067.13916-.15602.17332-.14207.43839.0312.59441l3.60841 3.24834c.17332.15603.43839.14207.5944-.0312.15603-.17331.14226-.43839-.0311-.59441l-3.60858-3.24834c-.0867-.078-.1963-.11356-.30376-.10791zm40.10831.0142c-.10745-.006-.21722.0298-.30393.10773l-3.61059 3.24581c-.17342.15589-.18768.42097-.0318.5944.1559.17342.42117.18751.59459.0316l3.61077-3.2458c.17342-.1559.1875-.42098.0316-.59441-.078-.0867-.18322-.13361-.29066-.13933zm-41.8225 2.18998c-.13494-.005-.26949.0558-.35515.17367-.13707.18866-.0955.4508.0932.58787l1.65224 1.20044c.18866.13708.45079.0957.58786-.093.13708-.18866.0956-.45098-.093-.58805l-1.65224-1.20044c-.0707-.0514-.15193-.0776-.23289-.0805zm43.53505.0153c-.081.003-.16211.0289-.23289.0803l-1.65297 1.19936c-.18875.13694-.2305.39929-.0936.58805.13695.18875.39912.23031.58787.0934l1.65316-1.19935c.18875-.13694.23031-.39912.0934-.58787-.0856-.11797-.22004-.17847-.35497-.17385zM9.7192 17.48992c-.13469.009-.26211.0836-.33499.20982-.1166.20195-.0479.45837.15405.57497l4.20463 2.42758c.20195.1166.45837.0479.57497-.15405.1166-.20195.0479-.45837-.15405-.57497l-4.20463-2.42759c-.0757-.0437-.15917-.0614-.23998-.0558zm46.72744 0c-.0808-.006-.16425.012-.23998.0558l-4.20463 2.42759c-.20195.1166-.27065.37302-.15405.57497.1166.20195.37302.27065.57497.15405l4.20482-2.42758c.20195-.1166.27064-.37302.15404-.57497-.0729-.12622-.20048-.20041-.33517-.20982zm-47.9386 2.50606c-.16403-.004-.32133.0899-.39258.2496-.095.21298-.00006.46091.21292.5559l1.86532.83202c.21298.095.46091.00007.5559-.2129.095-.21298-.00012-.46091-.21309-.5559l-1.86515-.83202c-.0532-.0238-.10865-.0356-.16332-.0367zm49.15794.0173c-.0547.001-.11024.013-.16351.0367l-1.86569.83057c-.21304.0949-.3083.34267-.21346.55571.0949.21304.34286.3083.5559.21346l1.8657-.83076c.21303-.0948.30811-.34267.21327-.55571-.0711-.15978-.22818-.25323-.39221-.24997zM7.42859 22.61527c-.16349.0137-.31006.12291-.36424.28921-.0722.22172.048.45839.26977.53064l4.61629 1.50418c.22171.0722.45839-.0481.53064-.26977.0722-.22172-.048-.4584-.26977-.53064L7.595 22.6347c-.0554-.0181-.11192-.024-.16641-.0194zm51.31484.018c-.0545-.005-.11078.001-.16623.0194l-4.61736 1.50092c-.22178.0721-.34223.30869-.27014.53046.0721.22177.30868.34223.53046.27014l4.61719-1.50092c.22178-.0721.3424-.30869.27032-.53046-.0541-.16633-.20077-.2757-.36424-.28957zM6.75607 25.36479c-.1961-.002-.37196.13412-.41438.33371-.0485.2281.0962.45073.32427.49922l1.99777.42455c.2281.0485.45072-.0962.49921-.32427.0485-.22811-.0962-.45074-.32427-.49922l-1.99759-.42455c-.0285-.006-.057-.009-.085-.009zm52.65462.004c-.028.00023-.0563.004-.0848.009l-1.99778.42437c-.2281.0485-.37271.27093-.32426.49904.0485.2281.2711.3729.49921.32445l1.99759-.42437c.2281-.0485.3729-.27111.32445-.49922-.0424-.19959-.21829-.33537-.41437-.33371zM6.24704 28.13046c-.1952.0187-.35587.17185-.37731.37477-.0245.2319.14232.43838.37422.46288l4.82829.51048c.2319.0245.43838-.1425.46288-.37441.0245-.2319-.1425-.43838-.37441-.46288l-4.82828-.51048c-.029-.003-.0575-.003-.0854-.00035zm53.6763.0363c-.0279-.003-.0566-.003-.0856.00035l-4.82883.50394c-.23194.0242-.39914.2304-.37496.46233.0242.23194.2304.39918.46234.37496l4.82883-.50394c.23193-.0242.39914-.2304.37496-.46234-.0212-.20294-.1816-.35634-.37678-.37532zM6.16529 30.96149c-.2332 0-.42091.18772-.42091.42092 0 .23319.18771.42091.42091.42091h2.04228c.23319 0 .4211-.18772.4211-.42091 0-.2332-.18791-.42092-.4211-.42092zm51.79298 0c-.23319 0-.42092.18772-.42092.42092.00001.23319.18773.42091.42092.42091h2.04228c.23319 0 .42092-.18772.42092-.42091 0-.2332-.18773-.42092-.42092-.42092zM11.15508 33.2561c-.0279-.003-.0564-.003-.0854.00035l-4.82902.50394c-.23194.0242-.39913.2304-.37495.46233.0242.23194.2304.39918.46233.37496l4.82902-.50394c.23194-.0242.39913-.2304.37495-.46234-.0212-.20294-.18177-.35634-.37695-.37531zm43.85314.0298c-.19521.0187-.35588.17186-.37732.37478-.0245.2319.14233.43838.37423.46288l4.82829.51048c.23191.0245.43837-.14251.46288-.37441.0245-.2319-.14251-.43838-.37441-.46288l-4.8281-.51048c-.029-.003-.0577-.003-.0856-.00035zm-46.2602 2.8436c-.028.00024-.0565.003-.085.009l-1.99777.42436c-.22811.0485-.37271.27111-.32427.49922.0485.22811.27111.37272.49922.32427l1.99777-.42419c.2281-.0485.37271-.27111.32426-.49921-.0424-.1996-.2181-.33537-.41419-.33372zm48.66925.004c-.19609-.002-.37177.13394-.41419.33353-.0485.2281.096.45074.32409.49922l1.99777.42455c.22809.0485.45073-.096.49921-.32409.0485-.2281-.0962-.45092-.32426-.4994l-1.9976-.42455c-.0285-.006-.057-.009-.085-.009zm-45.30519 1.65787c-.0545-.005-.11077.001-.16622.0194L7.3285 39.31168c-.22178.0721-.34223.30869-.27014.53046.0721.22178.30868.34222.53046.27014l4.61719-1.50092c.22178-.0721.34241-.30869.27032-.53046-.0541-.16633-.20077-.2757-.36425-.28957zm41.93713.0149c-.16349.0137-.31005.12292-.36423.28921-.0722.22173.048.4584.26977.53065l4.61628 1.50418c.22172.0722.4584-.0481.53064-.26977.0723-.22172-.048-.4584-.26977-.53065l-4.61628-1.50418c-.0554-.0181-.11191-.024-.16641-.0194zm-43.69909 3.27251c-.0547.001-.11006.0128-.16332.0365l-1.86587.83075c-.21304.0948-.30812.34267-.21328.55571.0949.21304.34268.30812.55571.21328l1.86589-.83058c.21303-.0948.30811-.34267.21327-.55571-.0711-.15978-.22837-.25323-.3924-.24997zm45.45888.016c-.16403-.004-.32133.0899-.39258.24961-.095.21297-.00006.4609.21291.55589l1.86515.83202c.21297.095.46091.00006.5559-.21291.095-.21297.00006-.4609-.21291-.55589l-1.86515-.83203c-.0532-.0238-.10864-.0356-.16332-.0367zm-41.82613.91214c-.0808-.006-.16424.012-.23998.0558L9.53826 44.4903c-.20195.1166-.27065.37302-.15405.57497.1166.20195.37302.27065.57497.15405l4.20463-2.4274c.20195-.1166.27064-.3732.15405-.57515-.0729-.12622-.2003-.20041-.33499-.20982zm38.20028 0c-.13469.009-.26229.0836-.33517.20982-.1166.20195-.0479.45855.15405.57515l4.20463 2.4274c.20196.1166.45855.0479.57515-.15405.1166-.20195.0479-.45837-.15404-.57497l-4.20482-2.42758c-.0757-.0437-.15899-.0614-.2398-.0558zm-39.24903 3.56244c-.081.003-.16211.0291-.2329.0805l-1.65296 1.19935c-.18875.13694-.2305.39912-.0936.58787.13695.18875.39912.2305.58787.0935l1.65314-1.19935c.18877-.13693.23051-.39911.0936-.58786-.0856-.11797-.22022-.17866-.35516-.17404zm40.28761.0142c-.13494-.005-.26948.0558-.35515.17367-.13708.18865-.0955.45098.0932.58805l1.65224 1.20044c.18866.13707.4508.0955.58787-.0932.13707-.18866.0956-.4508-.093-.58787l-1.65224-1.20044c-.0707-.0514-.15193-.0778-.23289-.0807zm-36.54387.14533c-.10743-.006-.21702.0298-.30374.10773l-3.61076 3.2458c-.17342.15589-.18751.42098-.0316.59441.15589.17342.42097.1875.5944.0316l3.61077-3.2458c.17342-.15589.18751-.42098.0316-.59441-.0779-.0867-.18322-.13361-.29067-.13933zm32.80012.0116c-.10745.006-.21283.0525-.29084.13915-.15603.17332-.14207.43839.0312.59441l3.60841 3.24834c.17332.15604.43857.14208.59459-.0312.15603-.17331.14207-.43839-.0312-.5944l-3.6086-3.24835c-.0867-.078-.19611-.11355-.30356-.10791zm-29.37464 3.08358c-.13493-.005-.2696.0554-.35534.1733l-2.85613 3.92614c-.13719.18858-.0959.45087.0926.58805.18857.13719.45087.0959.58805-.0927l2.85613-3.92614c.13718-.18857.0959-.45086-.0926-.58805-.0707-.0514-.15175-.0778-.23271-.0806zm25.93573.0176c-.081.003-.16211.0289-.2329.0803-.18875.13694-.23048.39911-.0936.58787l2.85086 3.92995c.13693.18876.39911.2305.58787.0936.18876-.13693.23049-.3991.0936-.58786l-2.85086-3.92996c-.0856-.11797-.22004-.17846-.35498-.17385zm-29.6228.6064c-.10745.006-.21282.0525-.29084.13915l-1.36649 1.51763c-.15605.1733-.14223.43855.0311.59459.1733.15604.43837.14205.5944-.0313l1.36666-1.51762c.15606-.1733.14206-.43856-.0312-.59459-.0867-.078-.19611-.11354-.30357-.10791zm33.33076.002c-.10745-.006-.21691.0299-.30356.10791-.17333.156-.18726.42108-.0313.5944l1.3663 1.51799c.15602.17333.42109.18726.59442.0312.17332-.15601.18726-.42126.0312-.59459l-1.36631-1.5178c-.078-.0867-.18339-.13351-.29084-.13916zm-25.65524 1.68366c-.16403-.004-.32114.0899-.39239.24961l-1.97816 4.43389c-.095.21297-.00005.46089.21292.5559.21296.095.46089.00005.55589-.21291l1.97815-4.4339c.095-.21296.00005-.46089-.21292-.55589-.0532-.0238-.10881-.0356-.16349-.0367zm17.95556.0122c-.0547.001-.11023.0128-.1635.0365-.21297.0947-.30836.34244-.21363.55553l1.97196 4.43662c.0947.21297.34262.30836.55571.21364.21298-.0947.30836-.34244.21364-.55553l-1.97197-4.43662c-.071-.15973-.22818-.25329-.39221-.25015zM20.61581 52.5046c-.13468.009-.26212.0836-.33498.20982l-1.02115 1.76869c-.11659.20195-.0479.45837.15406.57497.20195.1166.45837.0479.57496-.15405l1.02115-1.76869c.11659-.20195.0479-.45837-.15406-.57497-.0757-.0437-.15916-.0614-.23998-.0558zm24.93421 0c-.0808-.006-.16406.0121-.23979.0558-.20195.1166-.27065.37302-.15405.57497l1.02114 1.76869c.1166.20195.37302.27064.57496.15405.20196-.1166.27066-.37302.15406-.57497l-1.02114-1.76869c-.0729-.12622-.20049-.20041-.33518-.20982zm-17.0545.0634c-.19609-.002-.3718.13394-.41419.33354l-1.00897 4.74926c-.0485.2281.0962.45076.32427.49921.22811.0485.45076-.0962.49922-.32427l1.00896-4.74926c.0485-.2281-.0962-.45076-.32427-.49921-.0285-.006-.057-.009-.085-.009zm9.1599.003c-.028.00022-.0563.003-.0848.009-.22814.0483-.37294.27071-.32465.49885l1.00553 4.74999c.0483.22814.27088.37293.49903.32464.22814-.0483.37293-.27089.32464-.49903l-1.0057-4.74965c-.0423-.19963-.21793-.33543-.41402-.33391zm-4.5725.47905c-.23319 0-.42092.18772-.42092.42092v4.85517c0 .2332.18773.42092.42092.42092.2332 0 .42092-.18772.42092-.42092v-4.85517c0-.2332-.18772-.42092-.42092-.42092zm-7.72657 1.56886c-.16347.0139-.31017.12324-.36423.28957l-.63129 1.94236c-.0721.22178.0484.45837.27014.53047.22177.0721.45836-.0486.53046-.27032l.63128-1.94218c.0721-.22177-.0484-.45836-.27013-.53046-.0554-.018-.11173-.024-.16623-.0194zm15.44987.001c-.0545-.005-.11078.001-.16622.0193-.22178.0721-.34238.30868-.27033.53047l.63111 1.94235c.0721.22179.30868.3422.53046.27014.22178-.0721.34238-.3085.27032-.53028l-.63128-1.94236c-.0541-.16634-.20058-.27568-.36406-.28957zm-10.36543 1.08181c-.1952.0188-.356.17203-.37732.37496l-.21346 2.03119c-.0244.23192.14268.43812.3746.46252.23192.0244.4383-.14268.4627-.3746l.21345-2.03101c.0244-.23192-.14268-.4383-.37458-.4627-.029-.003-.0575-.003-.0854-.00035zm5.26736.002c-.0279-.003-.0566-.003-.0856.00035-.23193.0242-.39917.2304-.37495.46233l.21218 2.03138c.0242.23193.2304.399.46234.37478.23193-.0242.39918-.23041.37496-.46234l-.212-2.03119c-.0212-.20295-.18178-.35637-.37697-.37533z" paint-order="markers stroke fill"/><path d="m469.09621 100.6068-65.50955 38.06124-41.41979 65.20654 60.59382-44.88117z" filter="url(#safari__f)" opacity=".40900005" paint-order="markers stroke fill" transform="translate(-112.09544 -20.8224) scale(.35154)"/><path fill="#ff5150" d="m36.3834003 34.83806178-6.60095092-6.91272438 23.41607429-15.75199774z" paint-order="markers stroke fill"/><path fill="#f1f1f1" d="m36.38339038 34.83805895-6.60095092-6.91272438-16.81512624 22.66471911z" paint-order="markers stroke fill"/><path d="m12.96732 50.59006 23.41607-15.75201 16.81513-22.66472z" opacity=".243"/></svg>                                                         </div>
+          <div class="label">Safari</div>
+        </td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+      </tr>
+    
 
+      <tr data-row="7">
+        <td class="cell">
+          <div class="frame">
+            <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="35.188 31.512 351.46 258.785"><path d="M384.195 282.109c0 3.771-2.769 6.302-6.047 6.302v-.023c-3.371.023-6.089-2.508-6.089-6.278 0-3.769 2.718-6.293 6.089-6.
+293 3.279-.001 6.047 2.523 6.047 6.292zm2.453 0c0-5.175-4.02-8.179-8.5-8.179-4.511 0-8.531 3.004-8.531 8.179 0 5.172 4.021 8.188 8.531 8.188 4.481 0 8.5-3.016 8.5-8.188m-9.91.692h.91l2.109 3.703h2.316l-2.336-3.859c1.207-.086 2.2-.661 2.2-2.286 0-2.019-1.392-2.668-3.75-2.668h-3.411v8.813h1.961v-3.703m.001-1.492v-2.122h1.364c.742 0 1.753.06 1.753.965 0 .985-.523 1.157-1.398 1.157h-1.719M329.406 237.027l10.598 28.993H318.48l10.926-28.993zm-11.35-11.289-24.423 61.88h17.246l3.863-10.934h28.903l3.656 10.934h18.722l-24.605-61.888-23.362.008zm-49.033 61.903h17.497v-61.922l-17.5-.004.003 61.926zm-121.467-61.926-14.598 49.078-13.984-49.074-18.879-.004 19.972 61.926h25.207l20.133-61.926h-17.851zm70.725 13.484h7.52c10.91 0 17.966 4.898 17.966 17.609 0 12.714-7.056 17.613-17.966 17.613h-7.52v-35.222zm-17.35-13.484v61.926h28.366c15.113 0 20.048-2.512 25.384-8.148 3.769-3.957 6.207-12.641 6.207-22.134 0-8.707-2.063-16.468-5.66-21.304-6.481-8.649-15.817-10.34-29.75-10.34h-24.547zm-165.743-.086v62.012h17.645v-47.086l13.672.004c4.527 0 7.754 1.128 9.934 3.457 2.765 2.945 3.894 7.699 3.894 16.395v27.23h17.098v-34.262c0-24.453-15.586-27.75-30.836-27.75H35.188zm137.583.086.007 61.926h17.489v-61.926h-17.496z"/><path fill="#77B900" d="M82.211 102.414s22.504-33.203 67.437-36.638V53.73c-49.769 3.997-92.867 46.149-92.867 46.149s24.41 70.565 92.867 77.026v-12.804c-50.237-6.32-67.437-61.687-67.437-61.687zm67.437 36.223v11.726c-37.968-6.769-48.507-46.237-48.507-46.237s18.23-20.195 48.507-23.47v12.867c-.023 0-.039-.007-.058-.007-15.891-1.907-28.305 12.938-28.305 12.938s6.958 24.991 28.363 32.183m0-107.125V53.73c1.461-.112 2.922-.207 4.391-.257 56.582-1.907 93.449 46.406 93.449 46.406s-42.343 51.488-86.457 51.488c-4.043 0-7.828-.375-11.383-1.005v13.739c3.04.386 6.192.613 9.481.613 41.051 0 70.738-20.965 99.484-45.778 4.766 3.817 24.278 13.103 28.289 17.168-27.332 22.883-91.031 41.329-127.144 41.329-3.481 0-6.824-.211-10.11-.528v19.306H305.68V31.512H149.648zm0 49.144V65.777c1.446-.101 2.903-.179 4.391-.226 40.688-1.278 67.382 34.965 67.382 34.965s-28.832 40.043-59.746 40.043c-4.449 0-8.438-.715-12.028-1.922V93.523c15.84 1.914 19.028 8.911 28.551 24.786l21.18-17.859s-15.461-20.277-41.524-20.277c-2.833-.001-5.544.198-8.206.483"/></svg>                                                                                                                                                               </div>
+          <div class="label">Nvidia</div>
+        </td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+      </tr>
+    
+
+      <tr data-row="8">
+        <td class="cell">
+          <div class="frame">
+            <svg viewBox="0 0 121 122" xmlns="http://www.w3.org/2000/svg" width="121" height="122" fill="none"><mask id="lovable__b" width="121" height="122" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="url(#l
+ovable__a)" fill-rule="evenodd" d="M36.069 0c19.92 0 36.068 16.155 36.068 36.084v13.713h12.004c19.92 0 36.069 16.156 36.069 36.084 0 19.928-16.149 36.083-36.069 36.083H0v-85.88C0 16.155 16.148 0 36.069 0Z" clip-rule="evenodd"/></mask><g mask="url(#lovable__b)"><g filter="url(#lovable__c)"><ellipse cx="52.738" cy="65.101" fill="#4B73FF" rx="81.373" ry="81.192"/></g><g filter="url(#lovable__d)"><ellipse cx="61.673" cy="20.547" fill="#FF66F4" rx="104.216" ry="81.192"/></g><g filter="url(#lovable__e)"><ellipse cx="78.666" cy="5.268" fill="#FF0105" rx="81.373" ry="71.304"/></g><g filter="url(#lovable__f)"><ellipse cx="63.121" cy="20.527" fill="#FE7B02" rx="48.937" ry="48.829"/></g></g><defs><filter id="lovable__c" width="235.52" height="235.159" x="-65.022" y="-52.478" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_572_319" stdDeviation="18.194"/></filter><filter id="lovable__d" width="281.208" height="235.159" x="-78.93" y="-97.032" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_572_319" stdDeviation="18.194"/></filter><filter id="lovable__e" width="235.52" height="215.383" x="-39.094" y="-102.423" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_572_319" stdDeviation="18.194"/></filter><filter id="lovable__f" width="170.649" height="170.432" x="-22.204" y="-64.688" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_572_319" stdDeviation="18.194"/></filter><linearGradient id="lovable__a" x1="40.453" x2="76.933" y1="21.433" y2="121.971" gradientUnits="userSpaceOnUse"><stop offset=".025" stop-color="#FF8E63"/><stop offset=".56" stop-color="#FF7EB0"/><stop offset=".95" stop-color="#4B73FF"/></linearGradient></defs></svg>                                                                                                                                                                                                                                                        </div>
+          <div class="label">Loveable</div>
+        </td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+      </tr>
+    
+
+      <tr data-row="9">
+        <td class="cell">
+          <div class="frame">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400"><path fill="#1f70c1" d="M0 0v27.367h194.648V0H0zm222.226 0v27.367h277.383S471.276 0 433.75 0H222.226zm331.797 0v27.367h167.812L711.875 0H554.023zm288.125 0-9.961 27
+.367h166.289V0H842.148zM0 53.222v27.367h194.648V53.222H0zm222.226.039V80.59h309.57s-3.615-21.063-9.922-27.329H222.226zm331.797 0V80.59h186.211l-9.219-27.329H554.023zm268.203 0-9.219 27.329h185.469V53.261h-176.25zM55.937 106.444v27.406h84.297v-27.406H55.937zm222.227 0v27.406h84.297v-27.406h-84.297zm166.289 0v27.406h84.297s5.352-14.473 5.352-27.406h-89.649zm165.508 0v27.406h149.453l-9.961-27.406H609.961zm193.906 0-10 27.406h150.195v-27.406H803.867zm-747.93 53.262v27.367h84.297v-27.367H55.937zm222.227 0v27.367h215.312s18.012-14.042 23.75-27.367H278.164zm331.797 0v27.367h84.297v-15.234l5.352 15.234h154.414l5.742-15.234v15.234h84.297v-27.367H785.82l-8.398 23.18-8.438-23.18H609.961zM55.937 212.928v27.367h84.297v-27.367H55.937zm222.227 0v27.367h239.062c-5.739-13.281-23.75-27.367-23.75-27.367H278.164zm331.797 0v27.367h84.297v-27.367h-84.297zm99.609 0 10.195 27.367h115.781l9.688-27.367H709.57zm150.195 0v27.367h84.297v-27.367h-84.297zM55.937 266.15v27.366h84.297V266.15H55.937zm222.227 0v27.366h84.297V266.15h-84.297zm166.289 0v27.366h89.648c0-12.915-5.352-27.366-5.352-27.366h-84.296zm165.508 0v27.366h84.297V266.15h-84.297zm118.75 0 9.883 27.366h77.617l9.961-27.366h-97.461zm131.054 0v27.366h84.297V266.15h-84.297zM1.523 319.372v27.406h194.648v-27.406H1.523zm220.703 0v27.406h299.648c6.307-6.275 9.922-27.406 9.922-27.406h-309.57zm333.321 0v27.406h138.711v-27.406H555.547zm192.343 0 10.156 27.406h39.492l9.531-27.406H747.89zm111.875 0v27.406H1000v-27.406H859.765zM1.523 372.633V400h194.648v-27.367H1.523zm220.703 0v27.328H433.75c37.526 0 65.859-27.328 65.859-27.328H222.226zm333.321 0V400h138.711v-27.367H555.547zm211.601 0 9.766 27.29 1.68.038 9.922-27.328h-21.368zm92.617 0V400H1000v-27.367H859.765z"/></svg>                                                                                                                                                                                                              </div>
+          <div class="label">IBM (International Business Machine Corp)</div>
+        </td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+      </tr>
+    
+
+      <tr data-row="10">
+        <td class="cell">
+          <div class="frame">
+            <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="enable-background:new 0 0 100 28.6" viewBox="0 0 100 28.6"><path d="M11.3 1c.2 0 .3.1.5.2-1.2.5-2.4 1.8-3 4.6l-2.2.6c.7-2 2.1-5.4 4.7-5.4zm1.1 1c.2.6.4 1.3.4 2
+.4v.2l-2.9.8c.6-2.1 1.6-3 2.5-3.4zM15 3.8l-1.3.4v-.3c0-.9-.1-1.6-.3-2.2.7.2 1.3 1.1 1.6 2.1zm6.5 1.6c0-.1-.1-.2-.2-.2-.2 0-2.3-.2-2.3-.2s-1.5-1.5-1.7-1.6c-.2-.2-.5-.1-.6-.1 0 0-.3.1-.8.3C15.4 2.2 14.5.9 13 .9h-.1c-.4-.6-1-.8-1.5-.8C7.8 0 6.1 4.5 5.5 6.8c-.8.2-1.6.5-2.5.8-.8.2-.8.3-.9 1C2 9.1 0 24.9 0 24.9l15.9 3 8.6-1.9s-3-20.4-3-20.6z" style="fill:#8db849"/><path d="M21.2 5.2C21.1 5.2 19 5 19 5s-1.5-1.5-1.7-1.6c-.1-.1-.1-.1-.2-.1l-1.2 24.6 8.6-1.9s-3-20.4-3-20.6c0-.1-.2-.2-.3-.2" style="fill:#5a863e"/><path d="m13 10-1.1 3.2s-.9-.5-2.1-.5c-1.7 0-1.8 1-1.8 1.3 0 1.4 3.8 2 3.8 5.4 0 2.7-1.7 4.4-4 4.4-2.7 0-4.1-1.7-4.1-1.7l.7-2.4s1.4 1.2 2.6 1.2c.8 0 1.1-.6 1.1-1.1 0-1.9-3.1-2-3.1-5.1 0-2.6 1.9-5.1 5.6-5.1 1.7-.1 2.4.4 2.4.4" style="fill:#fffffe"/><path d="M34.6 15.9c-.9-.5-1.3-.9-1.3-1.4 0-.7.6-1.1 1.6-1.1 1.1 0 2.1.5 2.1.5l.8-2.4s-.7-.6-2.8-.6c-3 0-5 1.7-5 4.1 0 1.4 1 2.4 2.2 3.1 1 .6 1.4 1 1.4 1.6 0 .6-.5 1.2-1.5 1.2-1.4 0-2.8-.7-2.8-.7l-.8 2.4s1.2.8 3.3.8c3 0 5.2-1.5 5.2-4.2 0-1.5-1.1-2.6-2.4-3.3m12.1-5.1c-1.5 0-2.7.7-3.6 1.8l1.3-6.8H41l-3.3 17.3h3.4l1.1-5.9c.4-2.2 1.6-3.6 2.7-3.6.8 0 1.1.5 1.1 1.3 0 .5 0 1-.1 1.5l-1.3 6.8H48l1.3-7c.1-.7.2-1.6.2-2.2 0-2-1-3.2-2.8-3.2m8.7 9.9c-1.2 0-1.6-1-1.6-2.2 0-1.9 1-5.1 2.8-5.1 1.2 0 1.6 1 1.6 2 0 2.2-1 5.3-2.8 5.3zm1.7-9.9c-4.1 0-6.8 3.7-6.8 7.8 0 2.6 1.6 4.7 4.7 4.7 4 0 6.7-3.6 6.7-7.8 0-2.4-1.4-4.7-4.6-4.7zm10 10c-.9 0-1.4-.5-1.4-.5l.6-3.2c.4-2.1 1.5-3.5 2.7-3.5 1 0 1.4 1 1.4 1.9-.1 2.2-1.4 5.3-3.3 5.3zm3.3-10c-2.3 0-3.6 2-3.6 2L67 11h-3c-.1 1.2-.4 3.1-.7 4.5l-2.4 12.4h3.4l.9-5h.1s.7.4 2 .4c4 0 6.6-4.1 6.6-8.2 0-2.2-1-4.3-3.5-4.3zM78.7 6c-1.1 0-1.9.9-1.9 2 0 1 .6 1.7 1.6 1.7 1.1 0 2-.7 2-2 0-1-.7-1.7-1.7-1.7M74 23.1h3.4l2.3-12h-3.4l-2.3 12zm14.3-12h-2.4l.1-.6c.2-1.2.9-2.2 2-2.2.6 0 1.1.2 1.1.2l.7-2.7s-.6-.3-1.8-.3c-1.2 0-2.4.3-3.3 1.1-1.2 1-1.7 2.4-2 3.8l-.1.6H81l-.5 2.6h1.6l-1.8 9.5h3.4l1.8-9.5h2.3l.5-2.5zm8.1 0s-2.1 5.3-3.1 8.2c-.1-.9-.8-8.2-.8-8.2h-3.6l2 11c0 .2 0 .4-.1.6-.4.8-1.1 1.5-1.8 2-.6.5-1.4.8-1.9 1l.9 2.9c.7-.1 2.1-.7 3.3-1.8 1.5-1.4 3-3.7 4.4-6.7l4.1-8.9-3.4-.1z" style="fill:#1a1919"/></svg>                                                                               </div>
+          <div class="label">Shopify</div>
+        </td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+        <td class="cell"><div class="frame"></div></td>
+      </tr>
+    
+    </tbody>
+  </table>
+</main>
+
+
+<svg width="0" height="0" style="position:absolute;left:-9999px;top:-9999px;opacity:0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="svg-gray">
+      
+      <feColorMatrix type="matrix" values="
+        0.2126 0.7152 0.0722 0 0
+        0.2126 0.7152 0.0722 0 0
+        0.2126 0.7152 0.0722 0 0
+        0      0      0      1 0"/>
+    </filter>
+  </defs>
+</svg>
+
+<script>
+/**
+ * For each row:
+ *  - Find the first SVG in the first cell (Original).
+ *  - Read its viewBox to compute center and width/height.
+ *  - Clone content into four new SVGs and wrap with <g transform="..."> to apply SVG-native transforms.
+ *  - Apply grayscale via filter on a wrapping <g>.
+ */
+function makeVariantsForRow(row) {
+  const cells = row.querySelectorAll('td');
+  if (cells.length !== 5) return;
+  const origCell = cells[0];
+  const mirrorCell = cells[1];
+  const rotCell = cells[2];
+  const squishCell = cells[3];
+  const grayCell = cells[4];
+
+  const origSvg = origCell.querySelector('svg');
+  if (!origSvg) return; 
+
+  
+  let vb = origSvg.getAttribute('viewBox');
+  if (!vb) {
+    const w = parseFloat(origSvg.getAttribute('width')) || 1000;
+    const h = parseFloat(origSvg.getAttribute('height')) || 1000;
+    vb = `0 0 ${w} ${h}`;
+  }
+  const [minX, minY, vbW, vbH] = vb.split(/\s+/).map(parseFloat);
+  const cx = minX + vbW / 2;
+  const cy = minY + vbH / 2;
+
+  function makeEmptySVG() {
+    const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    s.setAttribute('viewBox', `${minX} ${minY} ${vbW} ${vbH}`);
+    s.setAttribute('role', 'img');
+    s.setAttribute('aria-label', 'variant');
+    return s;
+  }
+
+  function cloneContentGroup() {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    origSvg.childNodes.forEach(node => {
+      g.appendChild(node.cloneNode(true));
+    });
+    return g;
+  }
+
+  {
+    const s = makeEmptySVG();
+    const wrap = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    wrap.setAttribute('transform', `translate(${minX + vbW}, ${0}) scale(-1, 1)`);
+    wrap.appendChild(cloneContentGroup());
+    s.appendChild(wrap);
+    mirrorCell.querySelector('.frame').appendChild(s);
+  }
+
+  {
+    const s = makeEmptySVG();
+    const wrap = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    wrap.setAttribute('transform', `rotate(180, ${cx}, ${cy})`);
+    wrap.appendChild(cloneContentGroup());
+    s.appendChild(wrap);
+    rotCell.querySelector('.frame').appendChild(s);
+  }
+
+  {
+    const s = makeEmptySVG();
+    const wrap = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    wrap.setAttribute('transform', `translate(0, ${cy}) scale(1, 0.5) translate(0, ${-cy})`);
+    wrap.appendChild(cloneContentGroup());
+    s.appendChild(wrap);
+    squishCell.querySelector('.frame').appendChild(s);
+  }
+
+  {
+    const s = makeEmptySVG();
+    const wrap = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    wrap.setAttribute('filter', 'url(#svg-gray)');
+    wrap.appendChild(cloneContentGroup());
+    s.appendChild(wrap);
+    grayCell.querySelector('.frame').appendChild(s);
+  }
+}
+
+function init() {
+  document.querySelectorAll('tr[data-row]').forEach(makeVariantsForRow);
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
+    </template>
+
+    <!-- Assignment 3: D3 Stack -->
+    <template id="code3">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>D3 Stack (Scroll)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html, body { margin: 0; padding: 0; background:#111; }
+    iframe {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      border: 0;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- (1) Interactive Quadrilateral -->
+  <textarea id="doc1" style="display:none;"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quadrilateral - D3.js</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0 0 20px 0;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>Notes:</p>
+        <p>1. I first pasted a screenshot of the assignment onto ChatGPT. And although it was not the first initial way I wanted it to look, I tweaked the prompts to contain more of the grid, the label, to plot the e^B2 to connect to e^B1 etc.</p>
+        <p>2. I also used the prompt "I want there to be an interaction where you can adjust and restretch the corners of the shape. so 4 corners to be adjustable."</p>
+        <p>3. Prompts like " once the user has resized the shape. are you able to do an animation to blink the complete shape 3 times after 2 seconds of setting the new shape?"</p>
+        <svg id="canvas"></svg>
+    </div>
+
+    <script>
+        const width = 1000;
+        const height = 400;
+        const gridSize = 100;
+
+        const svg = d3.select('#canvas')
+            .attr('width', width)
+            .attr('height', height)
+            .style('background', '#fff');
+
+        // Draw grid
+        const grid = svg.append('g').attr('class', 'grid');
+
+        // Vertical lines
+        for (let x = 0; x <= width; x += gridSize) {
+            grid.append('line')
+                .attr('x1', x)
+                .attr('y1', 0)
+                .attr('x2', x)
+                .attr('y2', height)
+                .attr('stroke', '#ddd')
+                .attr('stroke-width', 1);
+        }
+
+        // Horizontal lines
+        for (let y = 0; y <= height; y += gridSize) {
+            grid.append('line')
+                .attr('x1', 0)
+                .attr('y1', y)
+                .attr('x2', width)
+                .attr('y2', y)
+                .attr('stroke', '#ddd')
+                .attr('stroke-width', 1);
+        }
+
+        // Initial corner positions
+        const corners = [
+            { x: 300, y: 320, id: 0, label: 'e^α₂' }, // bottom-left
+            { x: 490, y: 85, id: 1, label: 'e^β₂' },  // top-left
+            { x: 790, y: 85, id: 2, label: 'e^β₁' },  // top-right
+            { x: 600, y: 320, id: 3, label: 'e^α₁' }  // bottom-right
+        ];
+
+        // Create group for shape
+        const shapeGroup = svg.append('g').attr('class', 'shape-group');
+        const fillGroup = svg.append('g').attr('class', 'fill-group').style('opacity', '0');
+
+        // Function to update the quadrilateral
+        function updateShape() {
+            // Remove existing polygon and diagonals
+            shapeGroup.selectAll('.polygon').remove();
+            shapeGroup.selectAll('.diagonal').remove();
+            fillGroup.selectAll('.polygon-fill').remove();
+
+            // Draw filled polygon (for blinking)
+            const points = corners.map(c => [c.x, c.y]).join(' ');
+            fillGroup.append('polygon')
+                .attr('class', 'polygon-fill')
+                .attr('points', points)
+                .attr('fill', '#3498db')
+                .attr('fill-opacity', '0.5')
+                .attr('stroke', 'none');
+
+            // Draw polygon outline
+            shapeGroup.append('polygon')
+                .attr('class', 'polygon')
+                .attr('points', points)
+                .attr('fill', 'none')
+                .attr('stroke', '#2c3e50')
+                .attr('stroke-width', 2);
+
+            // Draw diagonals (dashed lines)
+            shapeGroup.append('line')
+                .attr('class', 'diagonal')
+                .attr('x1', corners[0].x)
+                .attr('y1', corners[0].y)
+                .attr('x2', corners[2].x)
+                .attr('y2', corners[2].y)
+                .attr('stroke', '#7f8c8d')
+                .attr('stroke-width', 2)
+                .attr('stroke-dasharray', '5,5');
+
+            shapeGroup.append('line')
+                .attr('class', 'diagonal')
+                .attr('x1', corners[1].x)
+                .attr('y1', corners[1].y)
+                .attr('x2', corners[3].x)
+                .attr('y2', corners[3].y)
+                .attr('stroke', '#7f8c8d')
+                .attr('stroke-width', 2)
+                .attr('stroke-dasharray', '5,5');
+        }
+
+        // Function to update labels
+        function updateLabels() {
+            svg.selectAll('.corner-label').remove();
+            
+            const labelOffsets = [
+                { dx: -25, dy: 20 },  // bottom-left
+                { dx: -25, dy: -10 }, // top-left
+                { dx: 15, dy: -10 },  // top-right
+                { dx: 15, dy: 20 }    // bottom-right
+            ];
+
+            svg.selectAll('.corner-label')
+                .data(corners)
+                .join('text')
+                .attr('class', 'corner-label')
+                .attr('x', (d, i) => d.x + labelOffsets[i].dx)
+                .attr('y', (d, i) => d.y + labelOffsets[i].dy)
+                .attr('fill', '#2c3e50')
+                .attr('font-size', '18px')
+                .attr('font-style', 'italic')
+                .text(d => d.label);
+        }
+
+        // Initial shape drawing
+        updateShape();
+        updateLabels();
+
+        // Animation timer
+        let blinkTimeout = null;
+
+        // Function to blink the shape
+        function blinkShape() {
+            let blinkCount = 0;
+            const totalBlinks = 3;
+            const blinkInterval = 300; // ms
+
+            const interval = setInterval(() => {
+                if (blinkCount >= totalBlinks * 2) {
+                    clearInterval(interval);
+                    fillGroup.style('opacity', '0');
+                    return;
+                }
+
+                // Toggle between 1 and 0 opacity for the filled area
+                const opacity = blinkCount % 2 === 0 ? '1' : '0';
+                fillGroup.style('opacity', opacity);
+                blinkCount++;
+            }, blinkInterval);
+        }
+
+        // Create draggable corner handles
+        const handles = svg.append('g').attr('class', 'handles');
+
+        const drag = d3.drag()
+            .on('drag', function(event, d) {
+                d.x = event.x;
+                d.y = event.y;
+                d3.select(this)
+                    .attr('cx', d.x)
+                    .attr('cy', d.y);
+                updateShape();
+                updateLabels();
+
+                // Clear existing timeout
+                if (blinkTimeout) {
+                    clearTimeout(blinkTimeout);
+                }
+            })
+            .on('end', function() {
+                // Set new timeout for blink animation
+                if (blinkTimeout) {
+                    clearTimeout(blinkTimeout);
+                }
+                blinkTimeout = setTimeout(() => {
+                    blinkShape();
+                }, 2000);
+            });
+
+        handles.selectAll('circle')
+            .data(corners)
+            .join('circle')
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y)
+            .attr('r', 8)
+            .attr('fill', '#34495e')
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 2)
+            .style('cursor', 'move')
+            .call(drag);
+    </script>
+</body>
+</html></textarea>
+
+  <!-- (2) SVG Morphing -->
+  <textarea id="doc2" style="display:none;"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js SVG Morphing Animation</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        h1 {
+            margin-bottom: 2rem;
+            color: #111827;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: #6b7280;
+        }
+        
+        .svg-wrapper {
+            display: inline-block;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        svg {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>Notes:</p>
+        <p>1. I first drew the 2 images and retraced it on adobe illustrator. I then exported it as an SVG and told ChatGpt to "create this SVG into D3.js in HTML please. and animate them from the first SVG to the next SVG when hovered over"</p>
+        <p>2. I then retold the prompt to say "I want to copy paste this HTML later, are you able to make the code independent and standalone and not need an external SVG File with the HTML"</p>
+        <p>3. It took many many tries and Chatgpt kept messing up the lines and making it inconsistent, but I tried asking it to treat it like a graph, and it sort of worked.</p>
+        <p>4. With enough tries and redoing and understanding the code, I make sure to plot them properly as an SVG path, and asked chatgpt to help</p>
+        <b>DO NOT HOVER ME, OR ELSE I GET ZAPPED!!</b>
+        <div class="svg-wrapper">
+            <svg id="morphing-svg" width="300" height="500" viewBox="0 0 445 605"></svg>
+        </div>
+    </div>
+
+    <script>
+        // The two SVG paths from your Figma imports
+        const path1 = "M105.009 23H185.009M105.009 23L225.509 0.5H340.009M105.009 23L108.509 150.5L185.009 195M185.009 23L340.009 0.5M185.009 23V195M340.009 0.5V157L185.009 195M247.509 123L285.009 115M217.509 91L244.509 87.5M285.009 82L304.009 78.5M198.509 191.69L190.509 228M190.509 335V228M190.509 335L227.009 398L198.509 468.5M190.509 335L262.009 383L255.009 453M190.509 228C190.509 228 129.535 266.173 143.509 299.5C155.458 327.995 217.509 327.5 217.509 327.5M190.509 228C190.509 228 214.042 281.956 244.509 287.5C265.229 291.271 296.009 271.5 296.009 271.5M217.509 327.5C217.509 327.5 228.388 307.471 239.509 309C251.22 310.61 258.515 323.711 255.009 335C251.891 345.042 242.24 351.431 232.009 349C222.156 346.659 217.509 327.5 217.509 327.5ZM296.009 271.5C296.009 271.5 309.831 240.106 318.509 249C319.849 250.373 321.356 253.004 321.356 253.004M296.009 271.5C296.009 271.5 298.34 283.418 304.009 287.5C314.925 295.359 334.461 284.95 334.509 271.5C334.541 262.637 321.356 253.004 321.356 253.004M321.356 253.004L304.009 327.5C304.009 327.5 339.06 288.346 353.509 265.5C367.959 242.654 383.009 211.5 383.009 211.5C383.009 211.5 401.074 208.87 412.009 203.5C422.944 198.13 444.009 179 444.009 179C444.009 179 419.473 216.197 394.009 224C363.009 233.5 321.356 253.004 321.356 253.004ZM0.509167 398L66.5092 441M0.509167 398L304.009 299.5L359.009 327.5M0.509167 398L4.00917 538L71.0092 584M66.5092 441L359.009 327.5M66.5092 441L71.0092 584M359.009 327.5V453L71.0092 584M198.509 468.5C198.509 468.5 195.556 478.696 197.015 485C199.535 495.895 208.807 512.024 217.509 505C224.665 499.224 220.544 489.5 216.009 481.5C211.811 474.094 198.509 468.5 198.509 468.5ZM255.009 453C255.009 453 247.691 461.778 247.509 468.5C247.189 480.37 259.219 496.719 269.009 490C277.22 484.365 273.969 473.135 269.009 464.5C265.485 458.365 255.009 453 255.009 453ZM269.009 257.5L247.509 321.5C247.509 321.5 241.804 328.589 238.009 325.5C234.829 322.912 236.509 317 236.509 317L255.009 253.004M269.009 257.5V246M269.009 257.5C269.009 257.5 263.743 259.878 261.009 259C258.275 258.122 255.009 253.004 255.009 253.004M255.009 253.004L264.509 244.858M264.509 244.858L269.009 241V246M264.509 244.858L269.009 246M208.509 38V171.5L323.509 144V23L208.509 38Z";
+        
+        const path2 = "M105.009 43.0465H185.009M105.009 43.0465L225.509 20.5465H340.009M105.009 43.0465L108.509 170.546L185.009 215.046M105.009 43.0465L99.5092 28.0465L85.5092 37.5465L75.5092 11.0465M185.009 43.0465L340.009 20.5465M185.009 43.0465V215.046M340.009 20.5465V177.046M185.009 215.046L340.009 177.046M340.009 177.046L350.509 188.046L355.509 174.046L371.009 191.546M198.509 211.737L161.009 257.046M190.509 355.046L161.009 257.046M190.509 355.046L161.009 434.046L198.509 488.546M190.509 355.046L275.509 399.046L300.009 445.546M161.009 257.046C161.009 257.046 174.631 301.179 143.509 319.546C121.391 332.6 85.5092 350.546 85.5092 350.546M161.009 257.046C161.009 257.046 214.042 302.002 244.509 307.546C265.229 311.317 296.009 291.546 296.009 291.546M70.0092 324.546C81.72 326.156 89.0146 339.257 85.5092 350.546M70.0092 324.546C65.9322 323.986 62.1565 326.054 59.0092 328.899M70.0092 324.546C70.0092 324.546 70.85 331.608 67.0092 332.546C63.5581 333.389 59.0092 328.899 59.0092 328.899M70.0092 324.546L60.5092 276.546M85.5092 350.546C82.3909 360.589 72.7396 366.977 62.5092 364.546C52.6561 362.206 50.0092 341.046 50.0092 341.046C50.0092 341.046 53.5714 333.813 59.0092 328.899M296.009 291.546C296.009 291.546 298.34 303.465 304.009 307.546C314.925 315.406 333.461 301.497 333.509 288.046C333.509 288.046 327.159 268.695 315.509 268.546C303.734 268.396 296.009 291.546 296.009 291.546ZM0.509167 418.046L66.5092 461.046M0.509167 418.046L304.009 319.546L359.009 347.546M0.509167 418.046L4.00917 558.046L71.0092 604.046M66.5092 461.046L359.009 347.546M66.5092 461.046L71.0092 604.046M359.009 347.546V473.046L71.0092 604.046M198.509 488.546C198.509 488.546 195.556 498.743 197.015 505.046C199.535 515.942 208.807 532.071 217.509 525.046C224.665 519.27 220.544 509.547 216.009 501.546C211.811 494.14 198.509 488.546 198.509 488.546ZM300.009 445.546C300.009 445.546 292.691 454.324 292.509 461.046C292.189 472.916 304.219 489.265 314.009 482.546C322.2 476.912 318.969 465.682 314.009 457.046C310.485 450.911 300.009 445.546 300.009 445.546ZM99.5092 199.046V211.737H81.0092L85.5092 227.546M255.009 43.0465L248.009 28.0465L285.009 37.5465L288.509 0.0464647M59.0092 328.899L47.5092 278.046M60.5092 276.546C60.5092 276.546 59.2775 281.27 56.0092 282.046C52.3206 282.923 47.5092 278.046 47.5092 278.046M60.5092 276.546L53.5092 270.88M47.5092 278.046L48.7592 273.046M48.7592 273.046L50.0092 268.046L53.5092 270.88M48.7592 273.046L53.5092 270.88M224.393 97.0465C222.608 100.139 221.358 103.496 221.009 106.046C220.513 109.675 222.494 112.678 225.509 114.653M224.393 97.0465C226.888 92.7222 230.428 88.9141 234.009 88.5465C237.65 88.1727 241.298 91.6011 244.086 95.5465M224.393 97.0465L244.837 113.046M244.837 113.046C247.938 110.249 249.639 106.383 248.009 102.546C247.144 100.509 245.772 97.933 244.086 95.5465M244.837 113.046C242.561 115.099 239.532 116.577 236.509 117.046C232.793 117.624 228.606 116.68 225.509 114.653M244.086 95.5465L225.509 114.653M290.514 88.5465C289.311 91.602 288.583 94.9471 288.509 97.0465C288.409 99.8799 289.846 102.36 292.009 104.01M290.514 88.5465C291.845 85.1628 293.758 82.1344 296.009 81.5465C298.85 80.8043 301.743 83.6406 304.009 87.0058M290.514 88.5465L305.72 102.546M305.72 102.546C304.154 104.384 301.945 105.719 299.509 106.046C296.818 106.408 294.081 105.59 292.009 104.01M305.72 102.546C307.848 100.051 308.79 96.6287 307.509 93.5465C306.757 91.7359 305.523 89.2529 304.009 87.0058M304.009 87.0058L292.009 104.01M208.509 58.0465V191.546L323.509 164.046V43.0465L208.509 58.0465ZM247.509 143.046C247.241 153.436 261.606 157.699 271.509 154.546C280.335 151.737 288.723 143.531 285.009 135.046C281.664 127.405 272.694 127.438 264.509 129.046C256.07 130.705 247.731 134.449 247.509 143.046ZM311.009 282.046L330.509 199.046C330.509 199.046 350.844 218.919 360.509 226.046C370.175 233.174 383.509 232.046 383.509 232.046L359.009 316.546C359.009 316.546 335.086 286.066 328.009 283.546C313.802 278.488 311.009 282.046 311.009 282.046Z";
+
+        // Select the SVG element
+        const svg = d3.select('#morphing-svg');
+
+        // Create the path element
+        const path = svg.append('path')
+            .attr('d', path1)
+            .attr('stroke', 'black')
+            .attr('fill', 'none')
+            .attr('stroke-width', 1);
+
+        // Hover handlers
+        svg.on('mouseenter', function() {
+            path.attr('d', path2);
+        });
+
+        svg.on('mouseleave', function() {
+            path.attr('d', path1);
+        });
+    </script>
+</body>
+</html></textarea>
+
+  <!-- (3) Interactive Venn -->
+  <textarea id="doc3" style="display:none;"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Venn Diagram</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f9fafb;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .svg-container {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        button {
+            padding: 1.5rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: white;
+            background-color: #18181b;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background-color: #27272a;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .absolute-button {
+            position: absolute;
+            top: 350px;
+        }
+
+        .delete-button {
+            left: 50px;
+        }
+
+        .rewrite-button {
+            right: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>Notes:</p>
+        <p>1. I redid the venn diagram circles in Figma, but I also tries using the D3.js way of making circles by including the variables "const circles" that D3 uses.</p>
+        <p>2. I added the roman numerals manually on figma and tried telling chatgpt to put placeholders on these intersections and areas of the circles.</p>
+        <p>3. The prompt used to make the interaction was "make it so that when you click on "replace", it replaces the colours of the venn diagram to different colours. and when you click on "rewrite", it changes the roman numerals on the venn diagram and randomizes it. and when you click on "delete", it deletes all of the venn diagram and roman numerals and replaces it with a big exclamation mark!"</p>
+        <p>4. A lot of reiterations of the prompt was done to get things right, such as the buttons being placed at the top left of the screen, and telling the chatbot to not keep changing my code.</p>
+        <div class="card">
+            <div class="button-container">
+                <button id="replaceBtn">Replace</button>
+            </div>
+            <div class="svg-container">
+                <svg id="venn-diagram"></svg>
+                <button id="deleteBtn" class="absolute-button delete-button">Delete</button>
+                <button id="rewriteBtn" class="absolute-button rewrite-button">Rewrite</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let currentColorIndex = 0;
+        let numerals = ['I', 'II', 'III', 'IV', 'V', 'VII', 'II'];
+        let isDeleted = false;
+
+        const colorSets = [
+            ['#FFB6C1', '#DDA0DD', '#F0E68C'], // pink, violet, yellow
+            ['#98D8C8', '#F6B93B', '#E55039'], // teal, orange, red
+            ['#A8E6CF', '#FFD3B6', '#FFAAA5'], // mint, peach, coral
+            ['#B4A7D6', '#FDCAE1', '#FFE5B4'], // lavender, pink, cream
+            ['#AED9E0', '#FAE3D9', '#D4A5A5'], // sky, beige, mauve
+        ];
+
+        const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+
+        // Draw function
+        function drawVennDiagram() {
+            const svg = d3.select('#venn-diagram');
+            svg.selectAll('*').remove();
+
+            const width = 800;
+            const height = 600;
+
+            svg.attr('width', width).attr('height', height);
+
+            if (isDeleted) {
+                // Draw big exclamation mark
+                svg.append('text')
+                    .attr('x', width / 2)
+                    .attr('y', height / 2 - 50)
+                    .attr('text-anchor', 'middle')
+                    .attr('font-size', '200px')
+                    .attr('fill', '#333')
+                    .text('!');
+                return;
+            }
+
+            const g = svg.append('g');
+
+            // Circle positions and radius
+            const radius = 150;
+            const colors = colorSets[currentColorIndex];
+            const circles = [
+                { cx: 400, cy: 150, r: radius, fill: colors[0] }, // top
+                { cx: 280, cy: 350, r: radius, fill: colors[1] }, // bottom left
+                { cx: 520, cy: 350, r: radius, fill: colors[2] }, // bottom right
+            ];
+
+            // Draw circles
+            circles.forEach(circle => {
+                g.append('circle')
+                    .attr('cx', circle.cx)
+                    .attr('cy', circle.cy)
+                    .attr('r', circle.r)
+                    .attr('fill', circle.fill)
+                    .attr('opacity', 0.6);
+            });
+
+            // Text positions for each region
+            const textPositions = [
+                { x: 230, y: 440, text: numerals[0] }, // left only
+                { x: 400, y: 130, text: numerals[1] }, // top only
+                { x: 570, y: 440, text: numerals[2] }, // right only
+                { x: 320, y: 280, text: numerals[3] }, // left-top
+                { x: 480, y: 280, text: numerals[4] }, // right-top
+                { x: 400, y: 340, text: numerals[5] }, // center (all three)
+                { x: 400, y: 430, text: numerals[6] }, // bottom (left-right)
+            ];
+
+            // Draw text
+            textPositions.forEach(pos => {
+                g.append('text')
+                    .attr('x', pos.x)
+                    .attr('y', pos.y)
+                    .attr('text-anchor', 'middle')
+                    .attr('font-size', '32px')
+                    .attr('fill', '#000')
+                    .text(pos.text);
+            });
+        }
+
+        // Event handlers
+        document.getElementById('replaceBtn').addEventListener('click', function() {
+            currentColorIndex = (currentColorIndex + 1) % colorSets.length;
+            isDeleted = false;
+            drawVennDiagram();
+        });
+
+        document.getElementById('rewriteBtn').addEventListener('click', function() {
+            numerals = Array(7).fill(null).map(() => 
+                romanNumerals[Math.floor(Math.random() * romanNumerals.length)]
+            );
+            isDeleted = false;
+            drawVennDiagram();
+        });
+
+        document.getElementById('deleteBtn').addEventListener('click', function() {
+            isDeleted = true;
+            drawVennDiagram();
+        });
+
+        // Initial draw
+        drawVennDiagram();
+    </script>
+</body>
+</html></textarea>
+
+  <!-- (4) Grid Visualization with Path Animation -->
+  <textarea id="doc4" style="display:none;"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Visualization with Path Animation</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            padding: 32px;
+        }
+
+        svg {
+            border: 2px solid #9ca3af;
+        }
+
+        .random-start-button {
+            position: absolute;
+            padding: 8px 16px;
+            background-color: #dcfce7;
+            color: #4b5563;
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .random-start-button:hover {
+            background-color: #bbf7d0;
+            color: #1f2937;
+        }
+
+        .labels {
+            position: absolute;
+            color: #4b5563;
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        .labels div {
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+    <p>Notes:</p>
+        <p>1. I uploaded the image onto ChatGPT. To no avail, of course it does not generate how I wanted the graph to look like. So I started from scratch and generated the grid first and plotted the x and red and blue squares. Next I told the chatbot to put a placeholder of the texts and "random start".</p>
+        <p>2. I then asked the chatbot to replicate an arrowed version on the grid i created, and replicate the image I uploaded. I first tried a couple of algorithms such as A-star and Dijkstra but it did not translate well and it was not as fluid as how I wanted it to look. I then added blue highlights around the arrow path and prompted it as "are you abel to add blue highlights around the path of the arrow? Make the width bigger.</p>
+        <p>3. I then added the button of "random start" and added the interaction and layers of "ok. so after clicking on "random start". instead of showing the arrows instantly. I want there to be an animation that loads each arrow one by one. KEEP THE ARROWS WHERE THEY ARE. I just want the loading to be slow."</p>
+        <p>4. As a caution, by this 4th chart, I have used a variety of mix and matching AI models to play with getting the right look for my charts. AI models used are, Grok, Gemini, Deepseek and ChatGPT</p>
+    </div>
+    <div class="container">
+        <svg id="grid"></svg>
+        <button class="random-start-button" id="randomStartBtn">random start</button>
+        <div class="labels" id="labels">
+            <div>covered space</div>
+            <div>no coverage</div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const gridSize = 15;
+        const cellSize = 45;
+        let isAnimating = false;
+
+        // Path positions
+        const pathPositions = [
+            { x: 3, y: 4 },
+            { x: 2.5, y: 4.5 },
+            { x: 2, y: 5 },
+            { x: 1.5, y: 5.5 },
+            { x: 1.2, y: 6 },
+            { x: 1, y: 6.5 },
+            { x: 0.9, y: 7 },
+            { x: 0.9, y: 7.5 },
+            { x: 1, y: 8 },
+            { x: 1.2, y: 8.5 },
+            { x: 1.5, y: 9 },
+            { x: 2, y: 9.5 },
+            { x: 2.5, y: 9.8 },
+            { x: 3, y: 10 },
+            { x: 3.5, y: 10.2 },
+            { x: 4, y: 10.4 },
+            { x: 4.5, y: 10.5 },
+            { x: 5, y: 10.6 },
+            { x: 5.5, y: 10.6 },
+            { x: 6, y: 10.5 },
+            { x: 6.5, y: 10.3 },
+            { x: 7, y: 10 },
+            { x: 7.5, y: 9.6 },
+            { x: 8, y: 9.2 },
+            { x: 8.5, y: 8.8 },
+            { x: 9, y: 8.5 },
+            { x: 9.5, y: 8.2 },
+            { x: 10, y: 8 },
+            { x: 10.5, y: 7.8 },
+            { x: 11, y: 7.4 },
+            { x: 11.5, y: 7 },
+        ];
+
+        // Calculate arrows with rotation
+        const arrows = pathPositions.map((pos, index) => {
+            let rotation = 0;
+            
+            if (index < pathPositions.length - 1) {
+                const next = pathPositions[index + 1];
+                const dx = next.x - pos.x;
+                const dy = next.y - pos.y;
+                rotation = (Math.atan2(dy, dx) * 180 / Math.PI);
+            } else {
+                if (index > 0) {
+                    const prev = pathPositions[index - 1];
+                    const dx = pos.x - prev.x;
+                    const dy = pos.y - prev.y;
+                    rotation = (Math.atan2(dy, dx) * 180 / Math.PI);
+                }
+            }
+            
+            return {
+                x: pos.x,
+                y: pos.y,
+                rotation,
+                delay: index * 0.05
+            };
+        });
+
+        const totalAnimationDuration = arrows.length * 0.05;
+
+        // Create SVG
+        const svg = d3.select('#grid')
+            .attr('width', gridSize * cellSize)
+            .attr('height', gridSize * cellSize);
+
+        // Background
+        svg.append('rect')
+            .attr('width', gridSize * cellSize)
+            .attr('height', gridSize * cellSize)
+            .attr('fill', 'white');
+
+        // Draw grid lines
+        const gridLines = svg.append('g').attr('class', 'grid-lines');
+
+        // Vertical lines
+        for (let i = 0; i <= gridSize; i++) {
+            gridLines.append('line')
+                .attr('x1', i * cellSize)
+                .attr('y1', 0)
+                .attr('x2', i * cellSize)
+                .attr('y2', gridSize * cellSize)
+                .attr('stroke', '#d1d5db')
+                .attr('stroke-width', 1);
+        }
+
+        // Horizontal lines
+        for (let i = 0; i <= gridSize; i++) {
+            gridLines.append('line')
+                .attr('x1', 0)
+                .attr('y1', i * cellSize)
+                .attr('x2', gridSize * cellSize)
+                .attr('y2', i * cellSize)
+                .attr('stroke', '#d1d5db')
+                .attr('stroke-width', 1);
+        }
+
+        // X marker (blue square)
+        const xMarker = svg.append('g')
+            .attr('transform', `translate(${cellSize * 5.5}, ${cellSize * 6.5})`);
+
+        xMarker.append('rect')
+            .attr('x', -8)
+            .attr('y', -8)
+            .attr('width', 16)
+            .attr('height', 16)
+            .attr('fill', '#4169E1');
+
+        xMarker.append('text')
+            .attr('x', -25)
+            .attr('y', -15)
+            .attr('fill', '#654321')
+            .attr('font-style', 'italic')
+            .attr('font-size', '24')
+            .text('x');
+
+        // X' marker (red square)
+        const xPrimeMarker = svg.append('g')
+            .attr('transform', `translate(${cellSize * 11.5}, ${cellSize * 7})`);
+
+        xPrimeMarker.append('rect')
+            .attr('x', -10)
+            .attr('y', -10)
+            .attr('width', 20)
+            .attr('height', 20)
+            .attr('fill', '#DC143C');
+
+        xPrimeMarker.append('text')
+            .attr('x', -30)
+            .attr('y', -18)
+            .attr('fill', '#654321')
+            .attr('font-style', 'italic')
+            .attr('font-size', '24')
+            .text("x'");
+
+        // Create path for blue highlight
+        const pathData = pathPositions.map((pos, index) => {
+            const x = pos.x * cellSize;
+            const y = pos.y * cellSize;
+            return index === 0 ? `M ${x} ${y}` : `L ${x} ${y}`;
+        }).join(' ');
+
+        const bluePath = svg.append('path')
+            .attr('d', pathData)
+            .attr('fill', 'none')
+            .attr('stroke', '#4169E1')
+            .attr('stroke-width', 35)
+            .attr('stroke-linecap', 'round')
+            .attr('stroke-linejoin', 'round')
+            .attr('opacity', 0.4);
+
+        const pathLength = bluePath.node().getTotalLength();
+        
+        bluePath
+            .attr('stroke-dasharray', pathLength)
+            .attr('stroke-dashoffset', pathLength);
+
+        // Create arrows
+        const arrowGroup = svg.append('g').attr('class', 'arrows');
+
+        arrows.forEach((arrow, index) => {
+            const g = arrowGroup.append('g')
+                .attr('transform', `translate(${arrow.x * cellSize}, ${arrow.y * cellSize})`);
+
+            const arrowPath = g.append('g')
+                .attr('transform', `rotate(${arrow.rotation})`)
+                .append('path')
+                .attr('d', 'M -15,0 L 5,0 M 5,0 L -2,-5 M 5,0 L -2,5')
+                .attr('stroke', '#654321')
+                .attr('stroke-width', 2)
+                .attr('fill', 'none')
+                .attr('stroke-linecap', 'round')
+                .attr('stroke-linejoin', 'round')
+                .style('opacity', 0);
+
+            arrow.element = arrowPath;
+        });
+
+        // Position button
+        const button = d3.select('#randomStartBtn')
+            .style('left', `${cellSize * 1.5}px`)
+            .style('top', `${cellSize * 3}px`);
+
+        // Position labels
+        d3.select('#labels')
+            .style('left', `${cellSize * 5.5}px`)
+            .style('top', `${cellSize * 8.5}px`)
+            .style('transform', 'rotate(-45deg)')
+            .style('transform-origin', 'center');
+
+        // Animation function
+        function animate() {
+            isAnimating = !isAnimating;
+
+            if (isAnimating) {
+                // Animate blue path
+                bluePath
+                    .transition()
+                    .duration(totalAnimationDuration * 1000)
+                    .ease(d3.easeLinear)
+                    .attr('stroke-dashoffset', 0);
+
+                // Animate arrows
+                arrows.forEach(arrow => {
+                    arrow.element
+                        .transition()
+                        .delay(arrow.delay * 1000)
+                        .duration(300)
+                        .style('opacity', 1);
+                });
+            } else {
+                // Reset blue path
+                bluePath
+                    .transition()
+                    .duration(300)
+                    .attr('stroke-dashoffset', pathLength);
+
+                // Reset arrows
+                arrows.forEach(arrow => {
+                    arrow.element
+                        .transition()
+                        .duration(0)
+                        .style('opacity', 0);
+                });
+            }
+        }
+
+        // Button click handler
+        button.on('click', animate);
+    </script>
+</body>
+</html></textarea>
+
+  <!-- (5) Model Frequency Over Time -->
+  <textarea id="doc5" style="display:none;"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Frequency Over Time - D3.js</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            max-width: 1400px;
+            width: 100%;
+        }
+        
+        h2 {
+            margin: 0 0 16px 0;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        
+        .chart-wrapper {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 8px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            user-select: none;
+        }
+        
+        .legend-item.disabled {
+            opacity: 0.4;
+        }
+        
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 2px;
+        }
+        
+        .legend-label {
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        .chart-container {
+            flex: 1;
+        }
+        
+        .area {
+            transition: fill 0.3s ease, stroke 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .grid line {
+            stroke: #ddd;
+            stroke-dasharray: 3 3;
+        }
+        
+        .grid path {
+            stroke-width: 0;
+        }
+        
+        .axis path,
+        .axis line {
+            stroke: #666;
+        }
+        
+        .axis text {
+            fill: #666;
+            font-size: 12px;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .tooltip.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div>
+    <p>Notes:</p>
+        <p>1. I looked at D3.js ways of creating a graph, and used the "const areaGroups" for the graph data to be shown. I then input it through the chatbot to graph it with a y and x axis. I also input the image as a reference</p>
+        <p>2. The next prompt I placed was "are you able to make the legends so that it would not take up all of the space on the left hand side? and make the margins at the bottom a bit larger to give the graph label on the x axis more breathing space for the user to see it" in order to keept tweaking the graph and how I wanted it to look.</p>
+        <p>3. After, i kept tweaking the chart to make the data relevant like telling the chatbot to change the values on the y axis to "make the y axis into 0,2,4,6,8,10"</p>
+        <p>4. For the transition and interaction, I wanted the chatbot to change it so that it highlights better data. "are you able to make the data on the graph so that they overlap each other. so that when you click on the legend to isolate the data, the data does not visually stack on one another". And "are you able to click on the the legend and isolate the only information on the graph as well? so if i click on "end to end" then it would only show the "end to end" data on the graph?".</p>
+        <p>5. lastly I tweaked the colours so that the highlighted colour is a hotter/ neon colour "make it so that when i hover over the graph colour in the chart, you change the colour into a hotter colour."</p>
+    </div>
+    <div class="container">
+        <h2>Model Frequency Over Time</h2>
+        <div class="chart-wrapper">
+            <div class="legend" id="legend"></div>
+            <div class="chart-container" id="chart"></div>
+        </div>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // Generate data
+        function generateData() {
+            const data = [];
+            for (let year = 1980; year <= 2020; year++) {
+                let setModel = 0;
+                let sequenceModel = 0;
+                let vectorModel = 0;
+                let endToEnd = 0;
+
+                // Set model: small peaks scattered throughout
+                if (year >= 1983 && year <= 1988) {
+                    setModel = Math.random() * 0.3 + 0.2;
+                } else if (year >= 2000 && year <= 2008) {
+                    setModel = Math.random() * 0.4 + 0.2;
+                }
+
+                // Sequence model: small consistent presence
+                if (year >= 1988 && year <= 2015) {
+                    sequenceModel = Math.random() * 0.4 + 0.15;
+                }
+
+                // Vector model: moderate presence in 2000s-2010s
+                if (year >= 1998 && year <= 2018) {
+                    vectorModel = Math.random() * 0.6 + 0.3;
+                }
+
+                // End-to-end: massive spike from 2012 onwards
+                if (year >= 2012) {
+                    if (year <= 2014) {
+                        endToEnd = Math.random() * 1.5 + 0.5;
+                    } else if (year <= 2017) {
+                        endToEnd = Math.random() * 2.5 + 2;
+                    } else if (year <= 2019) {
+                        endToEnd = Math.random() * 3 + 4;
+                    } else {
+                        endToEnd = Math.random() * 2 + 8;
+                    }
+                }
+
+                data.push({
+                    year,
+                    setModel,
+                    sequenceModel,
+                    vectorModel,
+                    endToEnd
+                });
+            }
+            return data;
+        }
+
+        const data = generateData();
+
+        // Configuration
+        const areas = [
+            { key: 'setModel', name: 'Set model', normalColor: '#8b9456', hotColor: '#9eff00', normalStroke: '#7a8450' },
+            { key: 'sequenceModel', name: 'Sequence model', normalColor: '#d4c19a', hotColor: '#ffcc00', normalStroke: '#b8a67d' },
+            { key: 'vectorModel', name: 'Vector model', normalColor: '#a99bc4', hotColor: '#b94dff', normalStroke: '#8b7ba8' },
+            { key: 'endToEnd', name: 'End-to-end', normalColor: '#d89bbf', hotColor: '#ff1493', normalStroke: '#c27ba0' }
+        ];
+
+        // State
+        let hoveredArea = null;
+        let visibleAreas = new Set(areas.map(a => a.key));
+
+        // Dimensions
+        const margin = { top: 10, right: 30, bottom: 30, left: 60 };
+        const width = 1100 - margin.left - margin.right;
+        const height = 400 - margin.top - margin.bottom;
+
+        // Create SVG
+        const svg = d3.select('#chart')
+            .append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+            .append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        // Scales
+        const x = d3.scaleLinear()
+            .domain([1980, 2020])
+            .range([0, width]);
+
+        const y = d3.scaleLinear()
+            .domain([0, 10])
+            .range([height, 0]);
+
+        // Grid
+        svg.append('g')
+            .attr('class', 'grid')
+            .call(d3.axisLeft(y)
+                .tickSize(-width)
+                .tickFormat('')
+                .ticks(5));
+
+        // Axes
+        const xAxis = svg.append('g')
+            .attr('class', 'axis')
+            .attr('transform', `translate(0,${height})`)
+            .call(d3.axisBottom(x)
+                .tickValues([1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020])
+                .tickFormat(d3.format('d')));
+
+        const yAxis = svg.append('g')
+            .attr('class', 'axis')
+            .call(d3.axisLeft(y)
+                .tickValues([0, 2, 4, 6, 8, 10]));
+
+        // Y-axis label
+        svg.append('text')
+            .attr('transform', 'rotate(-90)')
+            .attr('y', -40)
+            .attr('x', -height / 2)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '12px')
+            .style('fill', '#666')
+            .text('Frequency');
+
+        // Area generator
+        const area = d3.area()
+            .x(d => x(d.year))
+            .y0(height)
+            .y1(d => y(d.value))
+            .curve(d3.curveMonotoneX);
+
+        // Create areas
+        const areaGroups = areas.map(areaConfig => {
+            const areaData = data.map(d => ({
+                year: d.year,
+                value: d[areaConfig.key]
+            }));
+
+            const path = svg.append('path')
+                .datum(areaData)
+                .attr('class', `area area-${areaConfig.key}`)
+                .attr('d', area)
+                .style('fill', areaConfig.normalColor)
+                .style('stroke', areaConfig.normalStroke)
+                .style('stroke-width', 1)
+                .style('opacity', 0.8)
+                .on('mouseenter', () => {
+                    hoveredArea = areaConfig.key;
+                    updateAreas();
+                })
+                .on('mouseleave', () => {
+                    hoveredArea = null;
+                    updateAreas();
+                });
+
+            return { config: areaConfig, path, data: areaData };
+        });
+
+        // Tooltip
+        const tooltip = d3.select('#tooltip');
+
+        // Create legend
+        const legend = d3.select('#legend');
+        areas.forEach(areaConfig => {
+            const item = legend.append('div')
+                .attr('class', 'legend-item')
+                .on('click', () => {
+                    // Toggle visibility
+                    if (visibleAreas.has(areaConfig.key)) {
+                        if (visibleAreas.size > 1) {
+                            visibleAreas.delete(areaConfig.key);
+                        }
+                    } else {
+                        visibleAreas.add(areaConfig.key);
+                    }
+                    updateAreas();
+                    updateLegend();
+                })
+                .on('mouseenter', () => {
+                    hoveredArea = areaConfig.key;
+                    updateAreas();
+                })
+                .on('mouseleave', () => {
+                    hoveredArea = null;
+                    updateAreas();
+                });
+
+            item.append('div')
+                .attr('class', 'legend-color')
+                .style('background-color', areaConfig.normalColor);
+
+            item.append('span')
+                .attr('class', 'legend-label')
+                .text(areaConfig.name);
+        });
+
+        // Update functions
+        function updateAreas() {
+            areaGroups.forEach(({ config, path }) => {
+                const isVisible = visibleAreas.has(config.key);
+                const isHovered = hoveredArea === config.key;
+                
+                let opacity = 0.8;
+                if (!isVisible) {
+                    opacity = 0;
+                } else if (hoveredArea !== null) {
+                    opacity = isHovered ? 1 : 0.3;
+                }
+
+                const fill = isHovered ? config.hotColor : config.normalColor;
+                const stroke = isHovered ? config.hotColor : config.normalStroke;
+                const strokeWidth = isHovered ? 2 : 1;
+
+                path
+                    .style('fill', fill)
+                    .style('stroke', stroke)
+                    .style('stroke-width', strokeWidth)
+                    .style('opacity', opacity);
+            });
+        }
+
+        function updateLegend() {
+            d3.selectAll('.legend-item')
+                .each(function(d, i) {
+                    const item = d3.select(this);
+                    const key = areas[i].key;
+                    item.classed('disabled', !visibleAreas.has(key));
+                });
+        }
+
+        // Initial render
+        updateAreas();
+        updateLegend();
+    </script>
+</body>
+</html></textarea>
+
+    <script>
+        const templates = ['doc1', 'doc2', 'doc3', 'doc4', 'doc5'];
+        templates.forEach(id => {
+            const t = document.getElementById(id);
+            if (t) {
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'block';
+                iframe.style.width = '100vw';
+                iframe.style.height = '800px';
+                iframe.style.border = 'none';
+                iframe.srcdoc = t.value; // Changed from innerHTML to value for textarea
+                document.body.appendChild(iframe);
+            }
+        });
+    </script>
+</body>
+</html>
+</template>
+
+    <!-- Assignment 4: Heatmap -->
+    <template id="code4">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landscape Football Heatmap</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212; /* Darker background */
+            color: #ecf0f1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.5rem;
+            color: #e0e0e0;
+        }
+
+        .controls {
+            background: #1f1f1f;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            border: 1px solid #333;
+        }
+
+        label {
+            color: #bbb;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        select {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background: #2c3e50;
+            color: #ecf0f1;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            outline: none;
+            transition: background 0.2s;
+        }
+
+        select:hover {
+            background: #34495e;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 12px;
+            font-size: 14px;
+            background: rgba(20, 20, 20, 0.95);
+            color: #fff;
+            border-radius: 4px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            border: 1px solid #444;
+            z-index: 100;
+            min-width: 150px;
+        }
+
+        .tooltip strong {
+            color: #3498db;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Pitch Container */
+        #pitch-container {
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            border: 2px solid #444;
+            border-radius: 4px;
+            overflow: hidden; /* Keeps blur inside */
+        }
+
+        /* Legend */
+        .legend-container {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.9rem;
+            background: rgba(30,30,30,0.5);
+            padding: 10px 20px;
+            border-radius: 30px;
+        }
+        
+        /* Updated Gradient: Neon Blue -> Green -> Yellow -> Orange -> Red */
+        .legend-bar {
+            width: 300px;
+            height: 12px;
+            background: linear-gradient(to right, #00FFFF, #00ff00, #ffff00, #ffa500, #ff0000);
+            border-radius: 6px;
+        }
+
+        /* --- ADDED BREATHING ANIMATION --- */
+        @keyframes heat-breathe {
+            0% { opacity: 0.85; }
+            50% { opacity: 0.5; } /* Dims slightly to create breathing effect */
+            100% { opacity: 0.85; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Tactical Model Analysis</h1>
+    
+    <div class="controls">
+        <label for="approach-select">Select Dataset Strategy (Approach):</label>
+        <select id="approach-select"></select>
+    </div>
+
+    <div id="pitch-container"></div>
+
+    <div class="legend-container">
+        <span>Low (Neon Blue)</span>
+        <div class="legend-bar"></div>
+        <span>High (Red)</span>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // --- 1. DATA & CONFIGURATION ---
+        // MERGED DATASET (Verified):
+        // 1-4: ERM, DA, PGDT, TRADES (Initial verified set)
+        // 5-8: MART, RS, IBP, PRL (From AASIGNMENT 4.csv)
+        // 9: TandT (Reconstructed based on partial view "65.56, 94..." and standard benchmarks)
+        
+        const csvData = `Approach,Std Acc - CIFAR100,Std Acc - CIFAR10,Std Acc - SVHN,Std Acc - MNIST,CRR - CIFAR100,CRR - CIFAR10,CRR - SVHN,CRR - MNIST,CRA - CIFAR100,CRA - CIFAR10,CRA - SVHN,CRA - MNIST
+ERM,81.03,94.85,94.44,99.37,9.28,1.25,52.72,26.01,4.52,1.25,51.04,24.96
+DA,78.27,94.21,94.69,99.42,15.04,81.08,82.08,85.23,6.15,76.07,82.01,84.12
+PGDT,64.35,84.38,91.19,99.16,57.07,87.07,87.89,94.65,32.93,82.9,86.68,94.63
+TRADES,62.55,80.42,86.16,99.1,59.27,88.54,87.89,94.76,38.85,78.8,84.76,94.61
+MART,63.68,81.54,90.2,98.94,58.79,78.9,85.23,94.13,49.37,72.21,78.82,94.09
+RS,56.87,89.45,88.35,97.16,60.38,90,76.29,87.15,47.5,87.98,70.64,86.29
+IBP,39.45,48.4,73.09,97.78,49.34,54.7,61.94,89.18,29.2,40,57.26,88.51
+PRL,64.89,93.82,92,99.32,56.71,90.71,93.11,96.03,50.77,90.63,91.07,95.01
+TandT,65.56,94.23,94.79,99.32,62.05,95.08,93.15,97.80,52.07,91.75,92.81,96.80`;
+
+        let dataset = [];
+        
+        // Landscape Dimensions
+        const width = 900;
+        const height = 600;
+        const margin = { top: 0, right: 0, bottom: 0, left: 0 }; // Full bleed
+
+        // --- 2. SVG SETUP ---
+        const svg = d3.select("#pitch-container")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style("background", "#1a4d2e"); // Dark green pitch
+
+        // 2a. Define Filters (For the Heatmap Blur Effect)
+        const defs = svg.append("defs");
+        
+        // Gaussian Blur filter to blend the zones
+        const filter = defs.append("filter")
+            .attr("id", "heat-blur")
+            .attr("x", "-50%")
+            .attr("y", "-50%")
+            .attr("width", "200%")
+            .attr("height", "200%");
+        
+        filter.append("feGaussianBlur")
+            .attr("stdDeviation", "40") // High blur for smooth heat effect
+            .attr("result", "coloredBlur");
+
+        // Grass Pattern
+        const pattern = defs.append("pattern")
+            .attr("id", "grass-pattern")
+            .attr("width", 40)
+            .attr("height", 40)
+            .attr("patternUnits", "userSpaceOnUse");
+        
+        pattern.append("rect")
+            .attr("width", 40)
+            .attr("height", 40)
+            .attr("fill", "#1a4d2e");
+        
+        pattern.append("path")
+            .attr("d", "M0 40L40 0H20L0 20M40 40V20L20 40")
+            .attr("fill", "#143d24")
+            .attr("fill-opacity", 0.5);
+
+        // Background Grass
+        svg.append("rect")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("fill", "url(#grass-pattern)");
+
+        // --- 3. SCALES & GRID ---
+
+        // UPDATED Color Scale: Neon Blue -> Green -> Yellow -> Orange -> Red
+        const colorScale = d3.scaleLinear()
+            .domain([0, 25, 50, 75, 100]) // Percentage points
+            .range(["#00FFFF", "#00ff00", "#ffff00", "#ffa500", "#ff0000"]);
+
+        // Grid Configuration (Landscape)
+        // X Axis: Difficulty (Defense -> Attack) :: MNIST -> SVHN -> CIFAR10 -> CIFAR100
+        // Y Axis: Metric Type (Flank -> Center -> Flank) :: Std Acc -> CRR -> CRA
+        const xZones = ["MNIST", "SVHN", "CIFAR10", "CIFAR100"];
+        const yZones = ["Std Acc", "CRR", "CRA"];
+
+        const xScale = d3.scaleBand()
+            .domain(xZones)
+            .range([0, width]);
+
+        const yScale = d3.scaleBand()
+            .domain(yZones)
+            .range([0, height]);
+
+        // Generate Grid Data Points
+        let gridPoints = [];
+        xZones.forEach(xKey => {
+            yZones.forEach(yKey => {
+                gridPoints.push({
+                    xKey: xKey,
+                    yKey: yKey,
+                    id: `${yKey} - ${xKey}`, // Matches CSV Header format
+                    x: xScale(xKey),
+                    y: yScale(yKey),
+                    width: xScale.bandwidth(),
+                    height: yScale.bandwidth()
+                });
+            });
+        });
+
+        // --- 4. HEATMAP LAYER (Bottom Layer) ---
+        const heatGroup = svg.append("g").attr("class", "heat-layer");
+
+        // We draw rectangles for each zone and apply the blur filter
+        const heatZones = heatGroup.selectAll("rect")
+            .data(gridPoints)
+            .enter()
+            .append("rect")
+            .attr("x", d => d.x)
+            .attr("y", d => d.y)
+            .attr("width", d => d.width)
+            .attr("height", d => d.height)
+            .style("filter", "url(#heat-blur)") // Apply the blur
+            .style("opacity", 0.85)
+            .style("animation", "heat-breathe 4s infinite ease-in-out") // ADDED: Breathing animation
+            .attr("fill", "transparent"); // Initial fill
+
+        // --- 5. PITCH LINES (Top Layer) ---
+        // Draw lines ON TOP of the heat so they remain visible
+        const lineGroup = svg.append("g").attr("class", "pitch-lines");
+        const lineColor = "rgba(255,255,255,0.4)";
+        const lineWidth = 2;
+
+        // Helper to draw lines
+        function drawLine(x1, y1, x2, y2) {
+            lineGroup.append("line")
+                .attr("x1", x1).attr("y1", y1)
+                .attr("x2", x2).attr("y2", y2)
+                .attr("stroke", lineColor)
+                .attr("stroke-width", lineWidth);
+        }
+
+        function drawRect(x, y, w, h) {
+            lineGroup.append("rect")
+                .attr("x", x).attr("y", y)
+                .attr("width", w).attr("height", h)
+                .attr("fill", "none")
+                .attr("stroke", lineColor)
+                .attr("stroke-width", lineWidth);
+        }
+
+        // Outer Border
+        drawRect(20, 20, width-40, height-40);
+        
+        // Halfway Line
+        drawLine(width/2, 20, width/2, height-20);
+        
+        // Center Circle
+        lineGroup.append("circle")
+            .attr("cx", width/2).attr("cy", height/2)
+            .attr("r", 70)
+            .attr("fill", "none")
+            .attr("stroke", lineColor)
+            .attr("stroke-width", lineWidth);
+
+        lineGroup.append("circle")
+            .attr("cx", width/2).attr("cy", height/2)
+            .attr("r", 4).attr("fill", lineColor);
+
+        // Left Penalty Area (Defense)
+        drawRect(20, height/2 - 150, 130, 300);
+        drawRect(20, height/2 - 70, 50, 140); // Goal box
+
+        // Right Penalty Area (Attack)
+        drawRect(width-150, height/2 - 150, 130, 300);
+        drawRect(width-70, height/2 - 70, 50, 140); // Goal box
+
+        // --- 6. INTERACTION LAYER (Invisible Overlay) ---
+        // Since the heat zones are blurred, we need crisp invisible rectangles to catch mouse events
+        const interactionGroup = svg.append("g").attr("class", "interaction-layer");
+
+        interactionGroup.selectAll("rect")
+            .data(gridPoints)
+            .enter()
+            .append("rect")
+            .attr("x", d => d.x)
+            .attr("y", d => d.y)
+            .attr("width", d => d.width)
+            .attr("height", d => d.height)
+            .attr("fill", "transparent")
+            .attr("stroke", "rgba(255,255,255,0.1)") // Faint grid lines
+            .attr("stroke-dasharray", "5,5")
+            .style("cursor", "crosshair")
+            .on("mouseover", function(event, d) {
+                const selectedApproach = d3.select("#approach-select").property("value");
+                const rowData = dataset.find(r => r.Approach === selectedApproach);
+                const value = rowData ? parseFloat(rowData[d.id]) : 0;
+
+                // Highlight grid cell
+                d3.select(this).attr("stroke", "white").attr("stroke-dasharray", null).attr("stroke-width", 2);
+
+                // Show Tooltip
+                const tooltip = d3.select("#tooltip");
+                tooltip.style("opacity", 1)
+                    .html(`
+                        <strong>${d.yKey} (${d.xKey})</strong>
+                        <div style="font-size:0.85em; color:#ccc;">Metric: ${d.yKey} | Dataset: ${d.xKey}</div>
+                        <div style="margin-top:5px; font-size:1.2em; font-weight:bold; color:${colorScale(value)}">
+                            Score: ${value}%
+                        </div>
+                    `)
+                    .style("left", (event.pageX + 15) + "px")
+                    .style("top", (event.pageY - 15) + "px");
+            })
+            .on("mousemove", function(event) {
+                d3.select("#tooltip")
+                    .style("left", (event.pageX + 15) + "px")
+                    .style("top", (event.pageY - 15) + "px");
+            })
+            .on("mouseout", function() {
+                // Reset grid cell
+                d3.select(this).attr("stroke", "rgba(255,255,255,0.1)").attr("stroke-dasharray", "5,5").attr("stroke-width", 1);
+                d3.select("#tooltip").style("opacity", 0);
+            });
+        
+        // Add text labels on top of grid (optional but helpful for "Zonal" context)
+        const labelGroup = svg.append("g").style("pointer-events", "none");
+        
+        labelGroup.selectAll("text")
+            .data(gridPoints)
+            .enter()
+            .append("text")
+            .attr("x", d => d.x + d.width/2)
+            .attr("y", d => d.y + d.height/2)
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.35em")
+            .text(d => {
+                // Shorten names for cleaner look
+                const shortX = d.xKey.replace("CIFAR", "C");
+                const shortY = d.yKey.split(" ")[0];
+                return `${shortY}`;
+            })
+            .attr("fill", "rgba(255,255,255,0.3)")
+            .style("font-size", "12px")
+            .style("font-weight", "bold");
+
+        // --- 7. LOGIC ---
+
+        function init() {
+            // Parse CSV
+            dataset = d3.csvParse(csvData);
+
+            // Populate Select
+            const select = d3.select("#approach-select");
+            select.selectAll("option")
+                .data(dataset)
+                .enter()
+                .append("option")
+                .text(d => d.Approach)
+                .attr("value", d => d.Approach);
+
+            // Listen for changes
+            select.on("change", function() {
+                update(this.value);
+            });
+
+            // Initial Update
+            update(dataset[0].Approach);
+        }
+
+        function update(approachName) {
+            const dataRow = dataset.find(d => d.Approach === approachName);
+            if (!dataRow) return;
+
+            // Update Heat Zones with Transition
+            heatZones.transition()
+                .duration(1000) // Smooth 1s transition
+                .ease(d3.easeCubicInOut)
+                .attr("fill", d => {
+                    const val = parseFloat(dataRow[d.id]);
+                    return isNaN(val) ? "transparent" : colorScale(val);
+                });
+        }
+
+        // Run
+        init();
+
+    </script>
+</body>
+</html>
+    </template>
+
+    <script>
+        function showAssignment(id, linkElement) {
+            // Hide all sections
+            document.querySelectorAll('.assignment-section').forEach(el => el.classList.remove('active'));
+            // Show selected section
+            const section = document.getElementById('assign' + id);
+            if (section) {
+                section.classList.add('active');
+            }
+            
+            // Update sidebar active state
+            document.querySelectorAll('#sidebar a').forEach(el => el.classList.remove('active'));
+            if (linkElement) {
+                linkElement.classList.add('active');
+            }
+
+            // Load content if not loaded
+            const frame = document.getElementById('frame' + id);
+            if (frame && !frame.srcdoc) {
+                const template = document.getElementById('code' + id);
+                if (template) {
+                    frame.srcdoc = template.innerHTML;
+                } else {
+                    console.error('Template not found for assignment ' + id);
+                    frame.srcdoc = '<h1>Error: Template not found</h1>';
+                }
+            }
+        }
+
+        // Load first assignment by default
+        window.onload = () => {
+            const firstLink = document.querySelector('#sidebar a');
+            showAssignment(1, firstLink);
+        };
+    </script>
+</body>
+</html>
