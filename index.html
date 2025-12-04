@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment Portfolio</title>
+    <title>Assignment 5</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -66,24 +66,36 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             border-radius: 8px;
         }
-        /* Specific height for Assignment 2 to avoid internal scrolling */
+        /* Specific height for Assignment 2 to fit the SVG transformation table */
         #frame2 {
-            height: 3200px;
+            height: 2700px;
         }
-        /* Specific height for Assignment 3 to avoid internal scrolling */
+        /* Specific height for Assignment 3 to fit all 5 docs + notes without internal scrolling */
         #frame3 {
-            height: 4200px;
+            height: 5500px;
+        }
+        /* Specific height for Assignment 4 to fit the football heatmap */
+        #frame4 {
+            height: 900px;
         }
         h1 {
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+        }
+        .summary {
+            color: #5a6a7a;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            width: 100%;
+            text-align: justify;
         }
     </style>
 </head>
 <body>
 
     <div id="sidebar">
-        <h2>Portfolio</h2>
+        <h2>Jaime's Website</h2>
         <a href="#" onclick="showAssignment(1, this)" class="active">Assignment 1: PSI</a>
         <a href="#" onclick="showAssignment(2, this)">Assignment 2: SVG</a>
         <a href="#" onclick="showAssignment(3, this)">Assignment 3: D3 Stack</a>
@@ -93,18 +105,22 @@
     <div id="content">
         <div id="assign1" class="assignment-section active">
             <h1>Assignment 1: Singapore PSI Data</h1>
+            <p class="summary">This page displays real-time air quality data from Singapore's National Environment Agency (NEA) API. The Pollutant Standards Index (PSI) measures air pollution levels across different regions of Singapore including Central, North, South, East, and West zones. The interactive table automatically fetches and presents various air quality metrics such as PM2.5, PM10, O3, NO2, SO2, and CO readings, providing citizens with up-to-date information about the air they breathe. This assignment demonstrates API integration and dynamic data rendering. I think this was fairly easy to implement and merging this with the other assignment was the easiest.</p>
             <iframe id="frame1" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
         </div>
         <div id="assign2" class="assignment-section">
             <h1>Assignment 2: SVG Transformations</h1>
+            <p class="summary">This page showcases various SVG transformation techniques applied to a collection of well-known tech company logos. Each row displays an original logo alongside four transformed versions: left-right mirrored, rotated 180 degrees, vertically squeezed to 50%, and converted to grayscale. The assignment demonstrates fundamental SVG manipulation concepts including geometric transformations, scaling operations, and filter effects. These techniques form the foundation of vector graphics programming and are essential for creating dynamic, responsive visual elements in web development. The only thing I found to be a hassle with this assignment and merging with the others was that there was a huge space that I could not get rid of at the very bottom footer of this div. but it ended up being multuple divs.</p>
             <iframe id="frame2" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
         </div>
         <div id="assign3" class="assignment-section">
             <h1>Assignment 3: D3 Stack Visualization</h1>
+            <p class="summary">This page presents a collection of five interactive D3.js visualizations, each exploring different data visualization concepts. The stack includes an interactive quadrilateral with draggable corners, an SVG morphing animation triggered by hover, a Venn diagram with dynamic color and numeral controls, a grid-based path animation showing coverage areas, and a model frequency chart displaying data trends over time. Each visualization was crafted using AI-assisted prompting, demonstrating the iterative process of refining code through natural language instructions to achieve precise visual outcomes. Now this was the hardest of them all, and after hearing the presentation on monday coming from the other students, I am happy I am not the only one to discover that this was not an easy merge for their websites. I had many problems such as having too much padding on top and bottom of each graph and diagram, i thought the problem was that there was too many divs or containers in 1 div. But it ended up being that there was so much padding, that it created an unrealistic viewport experience for the user and when a user scrolls, it does not let you scroll the rest of the page. and when you get to another graph, the same stuckness happenes.</p>
             <iframe id="frame3" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
         </div>
         <div id="assign4" class="assignment-section">
             <h1>Assignment 4: Football Heatmap</h1>
+            <p class="summary">This page features an interactive football pitch heatmap visualizing tactical model analysis data. The visualization displays performance metrics across different machine learning approaches including ERM, DA, PGDT, TRADES, MART, RS, IBP, PRL, and TandT models. Users can select different dataset strategies from the dropdown menu to explore how various approaches perform across CIFAR-100, CIFAR-10, SVHN, and MNIST benchmarks. The heatmap uses a color gradient from neon blue (low) to red (high) with breathing animations, creating an engaging way to analyze and compare model robustness and accuracy metrics. Lastly, this was not so difficult as I managed to adjust the viewport of the container to be "fit" within the contents, and it shows everything cleanly, without interuppting the flow and interactions of everything.</p>
             <iframe id="frame4" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
         </div>
     </div>
@@ -117,7 +133,7 @@
         <html>
         <head>
             <style>
-                body { font-family: sans-serif; padding: 20px; }
+                body { font-family: sans-serif; padding: 20px; background-color: #f4f4f9; }
                 table { border-collapse: collapse; width: 100%; margin-top: 20px; }
                 th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
                 th { background-color: #f2f2f2; }
@@ -179,7 +195,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SVG Assignment 2 by Jaime Jover :)</title>
 <style>
-  :root { --bg:#f0f0f0; --fg:#e8eaed; --muted:#9aa0a6; --grid:#202225; }
+  :root { --bg:#f4f4f9; --fg:#e8eaed; --muted:#9aa0a6; --grid:#202225; }
   html,body { background:var(--bg); color:var(--fg); margin:0; font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
   main { padding:20px; }
   h1 { margin:0 0 8px; font-size:20px; color:#202225;}
@@ -191,7 +207,7 @@
   tr:last-child td { border-bottom:none; }
   .cell { padding:10px; }
   .frame {
-    background:#f0f0f0; border-radius:12px; overflow:hidden;
+    background:#f4f4f9; border-radius:12px; overflow:hidden;
     width:100%; aspect-ratio:4/3; display:grid; place-items:center;
   }
   .frame svg { width:50%; height:auto; }
@@ -473,13 +489,31 @@ document.addEventListener('DOMContentLoaded', init);
   <title>D3 Stack (Scroll)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    html, body { margin: 0; padding: 0; background:#111; }
+    html, body { margin: 0; padding: 0; background:#f4f4f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     iframe {
       display: block;
       width: 100vw;
-      height: 100vh;
+      height: 800px;
       border: 0;
+      background: #f4f4f9;
+    }
+    .notes-section {
       background: #fff;
+      padding: 30px 40px;
+      border-top: 1px solid #e0e0e0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .notes-section h3 {
+      margin: 0 0 15px 0;
+      color: #333;
+      font-size: 16px;
+    }
+    .notes-section p {
+      margin: 8px 0;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
     }
   </style>
 </head>
@@ -494,21 +528,19 @@ document.addEventListener('DOMContentLoaded', init);
     <title>Interactive Quadrilateral - D3.js</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        body {
+        html, body {
             margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f4f9;
+        }
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: 100%;
         }
         h1 {
             margin: 0 0 20px 0;
@@ -518,10 +550,6 @@ document.addEventListener('DOMContentLoaded', init);
 </head>
 <body>
     <div class="container">
-        <p>Notes:</p>
-        <p>1. I first pasted a screenshot of the assignment onto ChatGPT. And although it was not the first initial way I wanted it to look, I tweaked the prompts to contain more of the grid, the label, to plot the e^B2 to connect to e^B1 etc.</p>
-        <p>2. I also used the prompt "I want there to be an interaction where you can adjust and restretch the corners of the shape. so 4 corners to be adjustable."</p>
-        <p>3. Prompts like " once the user has resized the shape. are you able to do an animation to blink the complete shape 3 times after 2 seconds of setting the new shape?"</p>
         <svg id="canvas"></svg>
     </div>
 
@@ -720,39 +748,41 @@ document.addEventListener('DOMContentLoaded', init);
     <title>D3.js SVG Morphing Animation</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        body {
+        html, body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f9fafb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            overflow: hidden;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f4f4f9;
         }
         
         .container {
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
         
         h1 {
-            margin-bottom: 2rem;
+            margin-bottom: 20px;
             color: #111827;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 600;
         }
         
-        p {
-            margin-bottom: 1rem;
-            color: #6b7280;
+        .warning {
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0;
         }
         
         .svg-wrapper {
             display: inline-block;
-            padding: 2rem;
+            padding: 20px;
             background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
         }
         
         svg {
@@ -762,12 +792,7 @@ document.addEventListener('DOMContentLoaded', init);
 </head>
 <body>
     <div class="container">
-        <p>Notes:</p>
-        <p>1. I first drew the 2 images and retraced it on adobe illustrator. I then exported it as an SVG and told ChatGpt to "create this SVG into D3.js in HTML please. and animate them from the first SVG to the next SVG when hovered over"</p>
-        <p>2. I then retold the prompt to say "I want to copy paste this HTML later, are you able to make the code independent and standalone and not need an external SVG File with the HTML"</p>
-        <p>3. It took many many tries and Chatgpt kept messing up the lines and making it inconsistent, but I tried asking it to treat it like a graph, and it sort of worked.</p>
-        <p>4. With enough tries and redoing and understanding the code, I make sure to plot them properly as an SVG path, and asked chatgpt to help</p>
-        <b>DO NOT HOVER ME, OR ELSE I GET ZAPPED!!</b>
+        <p class="warning">DO NOT HOVER ME, OR ELSE I GET ZAPPED!!</p>
         <div class="svg-wrapper">
             <svg id="morphing-svg" width="300" height="500" viewBox="0 0 445 605"></svg>
         </div>
@@ -816,23 +841,24 @@ document.addEventListener('DOMContentLoaded', init);
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f9fafb;
-            padding: 2rem;
-            min-height: 100vh;
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f4f4f9;
+            overflow: hidden;
+            height: 100%;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
 
         .card {
             background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
+            border-radius: 8px;
+            padding: 30px;
         }
 
         .button-container {
@@ -886,11 +912,6 @@ document.addEventListener('DOMContentLoaded', init);
 </head>
 <body>
     <div class="container">
-        <p>Notes:</p>
-        <p>1. I redid the venn diagram circles in Figma, but I also tries using the D3.js way of making circles by including the variables "const circles" that D3 uses.</p>
-        <p>2. I added the roman numerals manually on figma and tried telling chatgpt to put placeholders on these intersections and areas of the circles.</p>
-        <p>3. The prompt used to make the interaction was "make it so that when you click on "replace", it replaces the colours of the venn diagram to different colours. and when you click on "rewrite", it changes the roman numerals on the venn diagram and randomizes it. and when you click on "delete", it deletes all of the venn diagram and roman numerals and replaces it with a big exclamation mark!"</p>
-        <p>4. A lot of reiterations of the prompt was done to get things right, such as the buttons being placed at the top left of the screen, and telling the chatbot to not keep changing my code.</p>
         <div class="card">
             <div class="button-container">
                 <button id="replaceBtn">Replace</button>
@@ -1020,20 +1041,24 @@ document.addEventListener('DOMContentLoaded', init);
     <title>Grid Visualization with Path Animation</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        body {
+        html, body {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            background-color: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow: hidden;
+            height: 100%;
+            background-color: #f4f4f9;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
-        .container {
+        .outer-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .grid-container {
             position: relative;
-            padding: 32px;
         }
 
         svg {
@@ -1070,20 +1095,15 @@ document.addEventListener('DOMContentLoaded', init);
     </style>
 </head>
 <body>
-    <div>
-    <p>Notes:</p>
-        <p>1. I uploaded the image onto ChatGPT. To no avail, of course it does not generate how I wanted the graph to look like. So I started from scratch and generated the grid first and plotted the x and red and blue squares. Next I told the chatbot to put a placeholder of the texts and "random start".</p>
-        <p>2. I then asked the chatbot to replicate an arrowed version on the grid i created, and replicate the image I uploaded. I first tried a couple of algorithms such as A-star and Dijkstra but it did not translate well and it was not as fluid as how I wanted it to look. I then added blue highlights around the arrow path and prompted it as "are you abel to add blue highlights around the path of the arrow? Make the width bigger.</p>
-        <p>3. I then added the button of "random start" and added the interaction and layers of "ok. so after clicking on "random start". instead of showing the arrows instantly. I want there to be an animation that loads each arrow one by one. KEEP THE ARROWS WHERE THEY ARE. I just want the loading to be slow."</p>
-        <p>4. As a caution, by this 4th chart, I have used a variety of mix and matching AI models to play with getting the right look for my charts. AI models used are, Grok, Gemini, Deepseek and ChatGPT</p>
-    </div>
-    <div class="container">
+    <div class="outer-container">
+    <div class="grid-container">
         <svg id="grid"></svg>
         <button class="random-start-button" id="randomStartBtn">random start</button>
         <div class="labels" id="labels">
             <div>covered space</div>
             <div>no coverage</div>
         </div>
+    </div>
     </div>
 
     <script>
@@ -1336,22 +1356,26 @@ document.addEventListener('DOMContentLoaded', init);
     <title>Model Frequency Over Time - D3.js</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background-color: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f4f4f9;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
         }
         
-        .container {
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .chart-card {
             background: white;
             padding: 24px;
             border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             max-width: 1400px;
             width: 100%;
         }
@@ -1444,15 +1468,8 @@ document.addEventListener('DOMContentLoaded', init);
     </style>
 </head>
 <body>
-    <div>
-    <p>Notes:</p>
-        <p>1. I looked at D3.js ways of creating a graph, and used the "const areaGroups" for the graph data to be shown. I then input it through the chatbot to graph it with a y and x axis. I also input the image as a reference</p>
-        <p>2. The next prompt I placed was "are you able to make the legends so that it would not take up all of the space on the left hand side? and make the margins at the bottom a bit larger to give the graph label on the x axis more breathing space for the user to see it" in order to keept tweaking the graph and how I wanted it to look.</p>
-        <p>3. After, i kept tweaking the chart to make the data relevant like telling the chatbot to change the values on the y axis to "make the y axis into 0,2,4,6,8,10"</p>
-        <p>4. For the transition and interaction, I wanted the chatbot to change it so that it highlights better data. "are you able to make the data on the graph so that they overlap each other. so that when you click on the legend to isolate the data, the data does not visually stack on one another". And "are you able to click on the the legend and isolate the only information on the graph as well? so if i click on "end to end" then it would only show the "end to end" data on the graph?".</p>
-        <p>5. lastly I tweaked the colours so that the highlighted colour is a hotter/ neon colour "make it so that when i hover over the graph colour in the chart, you change the colour into a hotter colour."</p>
-    </div>
-    <div class="container">
+    <div class="main-container">
+    <div class="chart-card">
         <h2>Model Frequency Over Time</h2>
         <div class="chart-wrapper">
             <div class="legend" id="legend"></div>
@@ -1460,6 +1477,7 @@ document.addEventListener('DOMContentLoaded', init);
         </div>
     </div>
     <div class="tooltip" id="tooltip"></div>
+    </div>
 
     <script>
         // Generate data
@@ -1694,6 +1712,53 @@ document.addEventListener('DOMContentLoaded', init);
 
     <script>
         const templates = ['doc1', 'doc2', 'doc3', 'doc4', 'doc5'];
+        const notesData = {
+            doc1: {
+                title: 'Interactive Quadrilateral - Notes',
+                notes: [
+                    '1. I first pasted a screenshot of the assignment onto ChatGPT. And although it was not the first initial way I wanted it to look, I tweaked the prompts to contain more of the grid, the label, to plot the e^B2 to connect to e^B1 etc.',
+                    '2. I also used the prompt "I want there to be an interaction where you can adjust and restretch the corners of the shape. so 4 corners to be adjustable."',
+                    '3. Prompts like "once the user has resized the shape. are you able to do an animation to blink the complete shape 3 times after 2 seconds of setting the new shape?"'
+                ]
+            },
+            doc2: {
+                title: 'SVG Morphing Animation - Notes',
+                notes: [
+                    '1. I first drew the 2 images and retraced it on adobe illustrator. I then exported it as an SVG and told ChatGpt to "create this SVG into D3.js in HTML please. and animate them from the first SVG to the next SVG when hovered over"',
+                    '2. I then retold the prompt to say "I want to copy paste this HTML later, are you able to make the code independent and standalone and not need an external SVG File with the HTML"',
+                    '3. It took many many tries and Chatgpt kept messing up the lines and making it inconsistent, but I tried asking it to treat it like a graph, and it sort of worked.',
+                    '4. With enough tries and redoing and understanding the code, I make sure to plot them properly as an SVG path, and asked chatgpt to help'
+                ]
+            },
+            doc3: {
+                title: 'Interactive Venn Diagram - Notes',
+                notes: [
+                    '1. I redid the venn diagram circles in Figma, but I also tries using the D3.js way of making circles by including the variables "const circles" that D3 uses.',
+                    '2. I added the roman numerals manually on figma and tried telling chatgpt to put placeholders on these intersections and areas of the circles.',
+                    '3. The prompt used to make the interaction was "make it so that when you click on replace, it replaces the colours of the venn diagram to different colours. and when you click on rewrite, it changes the roman numerals on the venn diagram and randomizes it. and when you click on delete, it deletes all of the venn diagram and roman numerals and replaces it with a big exclamation mark!"',
+                    '4. A lot of reiterations of the prompt was done to get things right, such as the buttons being placed at the top left of the screen, and telling the chatbot to not keep changing my code.'
+                ]
+            },
+            doc4: {
+                title: 'Grid Visualization with Path Animation - Notes',
+                notes: [
+                    '1. I uploaded the image onto ChatGPT. To no avail, of course it does not generate how I wanted the graph to look like. So I started from scratch and generated the grid first and plotted the x and red and blue squares. Next I told the chatbot to put a placeholder of the texts and "random start".',
+                    '2. I then asked the chatbot to replicate an arrowed version on the grid i created, and replicate the image I uploaded. I first tried a couple of algorithms such as A-star and Dijkstra but it did not translate well and it was not as fluid as how I wanted it to look. I then added blue highlights around the arrow path and prompted it as "are you able to add blue highlights around the path of the arrow? Make the width bigger."',
+                    '3. I then added the button of "random start" and added the interaction and layers of "ok. so after clicking on random start. instead of showing the arrows instantly. I want there to be an animation that loads each arrow one by one. KEEP THE ARROWS WHERE THEY ARE. I just want the loading to be slow."',
+                    '4. As a caution, by this 4th chart, I have used a variety of mix and matching AI models to play with getting the right look for my charts. AI models used are, Grok, Gemini, Deepseek and ChatGPT'
+                ]
+            },
+            doc5: {
+                title: 'Model Frequency Over Time - Notes',
+                notes: [
+                    '1. I looked at D3.js ways of creating a graph, and used the "const areaGroups" for the graph data to be shown. I then input it through the chatbot to graph it with a y and x axis. I also input the image as a reference',
+                    '2. The next prompt I placed was "are you able to make the legends so that it would not take up all of the space on the left hand side? and make the margins at the bottom a bit larger to give the graph label on the x axis more breathing space for the user to see it" in order to keep tweaking the graph and how I wanted it to look.',
+                    '3. After, i kept tweaking the chart to make the data relevant like telling the chatbot to change the values on the y axis to "make the y axis into 0,2,4,6,8,10"',
+                    '4. For the transition and interaction, I wanted the chatbot to change it so that it highlights better data. "are you able to make the data on the graph so that they overlap each other. so that when you click on the legend to isolate the data, the data does not visually stack on one another". And "are you able to click on the the legend and isolate the only information on the graph as well? so if i click on end to end then it would only show the end to end data on the graph?".',
+                    '5. lastly I tweaked the colours so that the highlighted colour is a hotter/ neon colour "make it so that when i hover over the graph colour in the chart, you change the colour into a hotter colour."'
+                ]
+            }
+        };
         templates.forEach(id => {
             const t = document.getElementById(id);
             if (t) {
@@ -1702,8 +1767,17 @@ document.addEventListener('DOMContentLoaded', init);
                 iframe.style.width = '100vw';
                 iframe.style.height = '800px';
                 iframe.style.border = 'none';
-                iframe.srcdoc = t.value; // Changed from innerHTML to value for textarea
+                iframe.srcdoc = t.value;
                 document.body.appendChild(iframe);
+                
+                // Add notes section after iframe
+                if (notesData[id]) {
+                    const notesSection = document.createElement('div');
+                    notesSection.className = 'notes-section';
+                    notesSection.innerHTML = '<h3>' + notesData[id].title + '</h3>' + 
+                        notesData[id].notes.map(note => '<p>' + note + '</p>').join('');
+                    document.body.appendChild(notesSection);
+                }
             }
         });
     </script>
